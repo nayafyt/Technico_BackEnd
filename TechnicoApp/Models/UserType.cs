@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TechnicoApp.Models;
 
+/// <summary>
+/// Represents the types of users in the system.
+/// </summary>
 public enum UserType
 {
     User,Admin
