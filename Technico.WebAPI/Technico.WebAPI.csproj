@@ -23,4 +23,8 @@
     <ProjectReference Include="..\TechnicoApp\TechnicoApp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

@@ -11,7 +11,7 @@ public class PropertyItem: IEntity<long>
 {
     public long Id { get; set; } // Primary Key
     public string PropertyIdentificationNumber { get; set; } = string.Empty;
-    public Address Address { get; set; } = new Address();
+    public string Address { get; set; } = string.Empty;
     public int YearOfConstruction { get; set; }
     public PropertyType PropertyType { get; set; }
 

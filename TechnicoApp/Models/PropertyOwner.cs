@@ -26,7 +26,7 @@ public class PropertyOwner : IEntity<string>
 
     public string Surname { get; set; } = string.Empty;
 
-    public Address Address { get; set; } = new();
+    public string Address { get; set; } = string.Empty;
 
     public string PhoneNumber { get; set; } = string.Empty;
 
