@@ -1,7 +1,7 @@
 ﻿using TechnicoApp.Domain.Models;
 using TechnicoApp.Models;
 
-namespace Technico.WebAPI.DTOs;
+namespace TechnicoApp.Dtos;
 
 public class PropertyItemDto
 {
