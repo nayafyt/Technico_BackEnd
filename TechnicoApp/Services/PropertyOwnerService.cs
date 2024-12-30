@@ -9,6 +9,10 @@ using TechnicoApp.Repositories;
 
 namespace TechnicoApp.Services;
 
+/// <summary>
+/// Service implementation for managing property owner data, providing functionality for
+/// registering, retrieving, updating, and deleting property owner records.
+/// </summary>
 public class PropertyOwnerService : IPropertyOwnerService
 {
     private readonly IRepository<PropertyOwner, string> _repository;
@@ -20,7 +24,7 @@ public class PropertyOwnerService : IPropertyOwnerService
         _mapper = new PropertyOwnerMapper();
     }
 
-    public ResponseApi<PropertyOwnerDto> RegisterPropertyOwner(PropertyOwnerDto propertyOwnerDto)
+    public ResponseApi<PropertyOwnerDto> Register(PropertyOwnerDto propertyOwnerDto)
     {
         if (_repository.Read(propertyOwnerDto.VatNumber) != null)
         {
@@ -45,7 +49,7 @@ public class PropertyOwnerService : IPropertyOwnerService
         };
     }
 
-    public ResponseApi<PropertyOwnerDto> GetPropertyOwnerDetails(string vatNumber)
+    public ResponseApi<PropertyOwnerDto> GetDetails(string vatNumber)
     {
         var propertyOwner = _repository.Read(vatNumber);
 
@@ -68,7 +72,7 @@ public class PropertyOwnerService : IPropertyOwnerService
         };
     }
 
-    public ResponseApi<PropertyOwnerDto> UpdatePropertyOwner(string vatNumber, PropertyOwnerDto propertyOwnerDto)
+    public ResponseApi<PropertyOwnerDto> Update(string vatNumber, PropertyOwnerDto propertyOwnerDto)
     {
         var propertyOwner = _repository.Read(vatNumber);
 
@@ -95,7 +99,7 @@ public class PropertyOwnerService : IPropertyOwnerService
         };
     }
 
-    public ResponseApi<bool> DeletePropertyOwner(string vatNumber)
+    public ResponseApi<bool> Delete(string vatNumber)
     {
         var propertyOwner = _repository.Read(vatNumber);
 

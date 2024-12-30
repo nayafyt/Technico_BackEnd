@@ -7,11 +7,14 @@ using TechnicoApp.Dtos;
 
 namespace TechnicoApp.Services;
 
+/// <summary>
+/// Interface defining operations for managing property owner information.
+/// </summary>
 public interface IPropertyOwnerService
 {
-    ResponseApi<PropertyOwnerDto> RegisterPropertyOwner(PropertyOwnerDto propertyOwnerDto);
-    ResponseApi<PropertyOwnerDto> GetPropertyOwnerDetails(string vatNumber);
-    ResponseApi<PropertyOwnerDto> UpdatePropertyOwner(string vatNumber, PropertyOwnerDto propertyOwnerDto);
-    ResponseApi<bool> DeletePropertyOwner(string vatNumber);
+    ResponseApi<PropertyOwnerDto> Register(PropertyOwnerDto propertyOwnerDto); //Is like Create
+    ResponseApi<PropertyOwnerDto> GetDetails(string vatNumber); //Is like Get(K id)
+    ResponseApi<PropertyOwnerDto> Update(string vatNumber, PropertyOwnerDto propertyOwnerDto);
+    ResponseApi<bool> Delete(string vatNumber);
 }
 

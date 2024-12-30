@@ -27,12 +27,12 @@ var newOwner = new PropertyOwnerDto
 };
 
 // Register a new Property Owner
-var registerResponse = propertyOwnerService.RegisterPropertyOwner(newOwner);
+var registerResponse = propertyOwnerService.Register(newOwner);
 Console.WriteLine(registerResponse.Description);
 
 // Retrieve Property Owner details by Id
 // We assume Id is 1 after registration (mocked logic, this might be adjusted based on actual ID generation)
-var getResponse = propertyOwnerService.GetPropertyOwnerDetails("123456789");
+var getResponse = propertyOwnerService.GetDetails("123456789");
 Console.WriteLine($"Get Response: {getResponse.Value.PhoneNumber}");
 if (getResponse.StatusCode == 200)
 {
@@ -59,15 +59,15 @@ var updatedOwner = new PropertyOwnerDto
     UserType = UserType.User
 };
 
-var updateResponse = propertyOwnerService.UpdatePropertyOwner("123456789", updatedOwner);
+var updateResponse = propertyOwnerService.Update("123456789", updatedOwner);
 Console.WriteLine(updateResponse.Description);
-var getResponseAfterUpdate = propertyOwnerService.GetPropertyOwnerDetails("123456789");
+var getResponseAfterUpdate = propertyOwnerService.GetDetails("123456789");
 Console.WriteLine($"Get Response After Update: {getResponseAfterUpdate.Value.PhoneNumber}");
 // Delete Property Owner
-var deleteResponse = propertyOwnerService.DeletePropertyOwner("123456789");
+var deleteResponse = propertyOwnerService.Delete("123456789");
 Console.WriteLine(deleteResponse.Description);
 
 // Try getting the deleted property owner (should return not found)
-var getAfterDeleteResponse = propertyOwnerService.GetPropertyOwnerDetails("123456789");
+var getAfterDeleteResponse = propertyOwnerService.GetDetails("123456789");
 Console.WriteLine(getAfterDeleteResponse.Description);
 
