@@ -2,13 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using TechnicoApp.Context;
 using TechnicoApp.Domain.Infrastructure.Repositories;
 using TechnicoApp.Domain.Interfaces;
+using TechnicoApp.Domain.Models;
+using TechnicoApp.Repositories;
 using TechnicoApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
-
-
 
 // Add services to the container.
 
@@ -22,7 +20,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TechnicoDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IPropertyItemRepository, PropertyItemRepository>();
+builder.Services.AddScoped<IRepository<PropertyItem, long>, PropertyItemRepository>();
 builder.Services.AddScoped<IPropertyItemService, PropertyItemService>();
 
 
