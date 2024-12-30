@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Technico.WebAPI.DTOs;
 using TechnicoApp.Domain.Models;
+using TechnicoApp.Dtos;
 
 namespace TechnicoApp.Domain.Interfaces;
 
 public interface IPropertyItemService
 {
-    Task CreateAsync(PropertyItem propertyItem);
-    Task<PropertyItem?> GetByIdAsync(long id);
+    Task<ResponseApi<PropertyItemDto>> CreateAsync(PropertyItemDto propertyItemDto);
+    Task<ResponseApi<PropertyItemDto>> GetByIdAsync(long id);
     //Task<List<PropertyItem>> GetAllAsync();
     //Task UpdateAsync(PropertyItem propertyItem);
-    Task<bool> DeletePermanentlyAsync(long id);
-    Task<PropertyItem?> DeactivateAsync(long id);   
-}
+    Task<ResponseApi<bool>> DeletePermanentlyAsync(long id);
+    Task<ResponseApi<PropertyItemDto>> DeactivateAsync(long id);   
+}    

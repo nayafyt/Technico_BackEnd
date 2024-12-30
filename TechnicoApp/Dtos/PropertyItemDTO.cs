@@ -3,12 +3,11 @@ using TechnicoApp.Models;
 
 namespace Technico.WebAPI.DTOs;
 
-public class PropertyItemDTO
+public class PropertyItemDto
 {
-    public long Id { get; set; }
-    public string PropertyIdentificationNumber { get; set; } = string.Empty;
-    public Address Address { get; set; } = new Address();
+    public long PropertyIdentificationNumber { get; set; }
+    public string Address { get; set; } =string.Empty;
     public int YearOfConstruction { get; set; }
     public PropertyType PropertyType { get; set; }
-    public string OwnerVAT { get; set; } = string.Empty;
+    public string PropertyOwnerVatNumber { get; set; } = string.Empty;
 }

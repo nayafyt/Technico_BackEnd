@@ -16,24 +16,24 @@ namespace Technico.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<PropertyItemDTO>>> GetAll()
-        {
-            var items = await _service.GetAllAsync();
-            return Ok(items.Select(item => new PropertyItemDTO
-            {
-                Id = item.Id,
-                PropertyIdentificationNumber = item.PropertyIdentificationNumber,
-                Address = item.Address,
-                YearOfConstruction = item.YearOfConstruction,
-                PropertyType = item.PropertyType,
-                OwnerVAT = item.PropertyOwnerVatNumber
-            }));
-        }
+        //public async Task<ActionResult<List<PropertyItemDTO>>> GetAll()
+        //{
+        //    var items = await _service.GetAllAsync();
+        //    return Ok(items.Select(item => new PropertyItemDTO
+        //    {
+        //        Id = item.Id,
+        //        PropertyIdentificationNumber = item.PropertyIdentificationNumber,
+        //        Address = item.Address,
+        //        YearOfConstruction = item.YearOfConstruction,
+        //        PropertyType = item.PropertyType,
+        //        OwnerVAT = item.PropertyOwnerVatNumber
+        //    }));
+        //}
 
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] PropertyItemDTO dto)
         {
-            var entity = new PropertyItem
+            var entity = new PropertyItemDto
             {
                 PropertyIdentificationNumber = dto.PropertyIdentificationNumber,
                 Address = dto.Address,
