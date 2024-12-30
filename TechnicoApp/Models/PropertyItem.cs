@@ -9,9 +9,9 @@ namespace TechnicoApp.Domain.Models;
 
 public class PropertyItem: IEntity<long>
 {
-    public long Id { get; set; } // Primary Key
-    public string PropertyIdentificationNumber { get; set; } = string.Empty;
-    public string Address { get; set; } = string.Empty;
+    public long Id { get; set; } 
+    public long PropertyIdentificationNumber { get; set; }
+    public string Address { get; set; } = string.Empty; 
     public int YearOfConstruction { get; set; }
     public PropertyType PropertyType { get; set; }
 
