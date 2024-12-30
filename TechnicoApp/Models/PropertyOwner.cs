@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using TechnicoApp.Domain.Models;
 using TechnicoApp.Models;
 
 /// <summary>
@@ -42,12 +43,15 @@ public class PropertyOwner : IEntity<string>
     /// Gets or sets the list of properties owned by the property owner.
     /// A property owner can own multiple properties.
     /// </summary>
-    public List<string> Properties { get; set; } = new(); 
+    public List<PropertyItem> PropertyItems { get; set; } = new(); 
 
     /// <summary>
     /// Gets or sets the list of repairs associated with the property owner's properties.
     /// A property owner can request multiple repairs for their properties.
     /// </summary>
-    public List<string> Repairs { get; set; } = new(); 
+    public List<string> Repairs { get; set; } = new();
+
+    // Soft-delete flag
+    public bool IsActive { get; set; } = true; // Default to active
 
 }

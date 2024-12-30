@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using TechnicoApp.Domain.Context;
+using TechnicoApp.Context;
 using TechnicoApp.Domain.Infrastructure.Repositories;
 using TechnicoApp.Domain.Interfaces;
 using TechnicoApp.Services;

@@ -1,12 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using TechnicoApp.Domain.Models;
 
 
-namespace TechnicoApp.Domain.Context;
+namespace TechnicoApp.Context;
 
 public class TechnicoDbContext : DbContext
 {
     public DbSet<PropertyItem> PropertyItems { get; set; }
+    public DbSet<PropertyOwner> PropertyOwners { get; set; }
     //public DbSet<PropertyOwner> PropertyOwners { get; set; }
     //public DbSet<PropertyRepair> PropertyRepairs { get; set; }
     public TechnicoDbContext(DbContextOptions<TechnicoDbContext> options) : base(options)
@@ -23,6 +25,6 @@ public class TechnicoDbContext : DbContext
 
     }
 
-      
-    }
+
+}
 

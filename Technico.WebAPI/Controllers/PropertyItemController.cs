@@ -26,7 +26,7 @@ namespace Technico.WebAPI.Controllers
                 Address = item.Address,
                 YearOfConstruction = item.YearOfConstruction,
                 PropertyType = item.PropertyType,
-                OwnerVAT = item.OwnerVAT
+                OwnerVAT = item.PropertyOwnerVatNumber
             }));
         }
 
@@ -38,7 +38,7 @@ namespace Technico.WebAPI.Controllers
                 PropertyIdentificationNumber = dto.PropertyIdentificationNumber,
                 Address = dto.Address,
                 YearOfConstruction = dto.YearOfConstruction,
-                OwnerVAT = dto.OwnerVAT
+                PropertyOwnerVatNumber = dto.OwnerVAT
             };
 
             await _service.CreateAsync(entity);
@@ -62,7 +62,7 @@ namespace Technico.WebAPI.Controllers
                     deletedItem.PropertyIdentificationNumber,
                     deletedItem.Address,
                     deletedItem.YearOfConstruction,
-                    deletedItem.OwnerVAT,
+                    deletedItem.PropertyOwnerVatNumber,
                     deletedItem.IsActive
                 }
 
@@ -87,7 +87,7 @@ namespace Technico.WebAPI.Controllers
                     deactivatedtedItem.PropertyIdentificationNumber,
                     deactivatedtedItem.Address,
                     deactivatedtedItem.YearOfConstruction,
-                    deactivatedtedItem.OwnerVAT,
+                    deactivatedtedItem.PropertyOwnerVatNumber,
                     deactivatedtedItem.IsActive
                 }
             });

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using TechnicoApp.Context;
+using TechnicoApp.Domain.Models;
 
 namespace TechnicoApp.Repositories;
 
-public class PropertyOwnerRepository: IRepository<PropertyOwner,string>
+public class PropertyOwnerRepository : IRepository<PropertyOwner, string>
 {
     private readonly TechnicoDbContext _context;
 
@@ -14,55 +17,52 @@ public class PropertyOwnerRepository: IRepository<PropertyOwner,string>
     {
         _context = context;
     }
-
-    public async Task<List<PropertyOwner>> GetAllAsync()
+    public async Task<PropertyOwner?> CreateAsync(PropertyOwner propertyOwner)
     {
-        return await _context.PropertyOwners
-                    .Where(p => p.IsActive)
-                    .ToListAsync();
+        await _context.PropertyOwners.AddAsync(propertyOwner);
+        await _context.SaveChangesAsync();
+        return propertyOwner;
     }
 
-    public async Task<PropertyOwner?> GetByIdAsync(long id)
+    public async Task<PropertyOwner?> GetAsync(string vatNumber)
     {
-        return await _context.PropertyOwners.FindAsync(id);
-
+        return await _context.PropertyOwners.FindAsync(vatNumber);
     }
 
-    public async Task AddAsync(PropertyOwner PropertyOwner)
+    public async Task<List<PropertyOwner>> GetAsync()
     {
-        await _context.PropertyOwners.AddAsync(PropertyOwner);
+        return await _context.PropertyOwners.ToListAsync();
+    }
+
+    public async Task<PropertyOwner?> UpdateAsync(PropertyOwner propertyOwner)
+    {
+        _context.PropertyOwners.Update(propertyOwner);
+        await _context.SaveChangesAsync();
+        return propertyOwner;
+    }
+
+    public async Task<bool> DeleteAsync(string vatNumber)
+    {
+        if (string.IsNullOrEmpty(vatNumber))
+            return false;
+
+        var propertyOwner = await _context.PropertyOwners.FindAsync(vatNumber);
+        if (propertyOwner == null) return false;
+
+        _context.PropertyOwners.Remove(propertyOwner);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+
+    public async Task<PropertyOwner?> DeactivateAsync(string id)
+    {
+        var propertyOwner = await _context.PropertyOwners.FindAsync(id);
+        if (propertyOwner == null) return default;
+        propertyOwner.IsActive = false;
+        _context.PropertyOwners.Update(propertyOwner);
         await _context.SaveChangesAsync();
 
-
-    }
-
-    public async Task<PropertyOwner?> UpdateAsync(PropertyOwner PropertyOwner)
-    {
-        _context.PropertyOwners.Update(PropertyOwner);
-        await _context.SaveChangesAsync();
-        return PropertyOwner;
-    }
-
-    public async Task<PropertyOwner> DeletePermanentlyAsync(long id)
-    {
-        var PropertyOwner = await _context.PropertyOwners.FindAsync(id);
-        if (PropertyOwner != null)
-        {
-            _context.PropertyOwners.Remove(PropertyOwner);
-            await _context.SaveChangesAsync();
-
-        }
-        return PropertyOwner;
-
-    }
-    public async Task<PropertyOwner?> DeactivateAsync(long id)
-    {
-        var PropertyOwner = await _context.PropertyOwners.FindAsync(id);
-        {
-            PropertyOwner.IsActive = false;
-            _context.PropertyOwners.Update(PropertyOwner);
-            await _context.SaveChangesAsync();
-        }
-        return PropertyOwner;
+        return propertyOwner;
     }
 }

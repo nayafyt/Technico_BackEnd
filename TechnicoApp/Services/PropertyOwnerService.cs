@@ -26,7 +26,7 @@ public class PropertyOwnerService : IPropertyOwnerService
 
     public async Task<ResponseApi<PropertyOwnerDto>> RegisterAsync(PropertyOwnerDto propertyOwnerDto)
     {
-        if (await _repository.ReadAsync(propertyOwnerDto.VatNumber) != null)
+        if (await _repository.GetAsync(propertyOwnerDto.VatNumber) != null)
         {
             return new ResponseApi<PropertyOwnerDto>()
             {
@@ -52,7 +52,7 @@ public class PropertyOwnerService : IPropertyOwnerService
 
     public async Task<ResponseApi<PropertyOwnerDto>> GetDetailsAsync(string vatNumber)
     {
-        var propertyOwner = await _repository.ReadAsync(vatNumber);
+        var propertyOwner = await _repository.GetAsync(vatNumber);
 
         if (propertyOwner == null)
         {
@@ -75,7 +75,7 @@ public class PropertyOwnerService : IPropertyOwnerService
 
     public async Task<ResponseApi<PropertyOwnerDto>> UpdateAsync(string vatNumber, PropertyOwnerDto propertyOwnerDto)
     {
-        var propertyOwner = await _repository.ReadAsync(vatNumber);
+        var propertyOwner = await _repository.GetAsync(vatNumber);
 
         if (propertyOwner == null)
         {
@@ -87,8 +87,16 @@ public class PropertyOwnerService : IPropertyOwnerService
         }
 
         var propertyOwnerUpdated = _mapper.GetModel(propertyOwnerDto);
+        if (propertyOwnerUpdated == null)
+        {
+            return new ResponseApi<PropertyOwnerDto>()
+            {
+                StatusCode = 10,
+                Description = "Property owner (Dto) not parsed into Model."
+            };
+        }
         // Save changes in the repository
-        await _repository.UpdateAsync(vatNumber, propertyOwnerUpdated);
+        await _repository.UpdateAsync(propertyOwnerUpdated);
 
         // Map the entity to DTO and return
         var resultDto = _mapper.GetDto(propertyOwnerUpdated);
@@ -102,7 +110,7 @@ public class PropertyOwnerService : IPropertyOwnerService
 
     public async Task<ResponseApi<bool>> DeleteAsync(string vatNumber)
     {
-        var propertyOwner = await _repository.ReadAsync(vatNumber);
+        var propertyOwner = await _repository.GetAsync(vatNumber);
 
         if (propertyOwner == null)
         {

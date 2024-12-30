@@ -1,37 +1,35 @@
 ﻿using TechnicoApp.Domain.Interfaces;
 using TechnicoApp.Domain.Models;
+using TechnicoApp.Repositories;
 
 namespace TechnicoApp.Services;
 
 public class PropertyItemService: IPropertyItemService
 {
-    private readonly IPropertyItemRepository _repository;
+    private readonly IRepository<PropertyItem, long> _repository;
 
-    public PropertyItemService(IPropertyItemRepository repository)
+    public PropertyItemService(IRepository<PropertyItem, long> repository)
     {
         _repository = repository;
     }
 
-    public async Task<List<PropertyItem>> GetAllAsync()
-    {
-        return await _repository.GetAllAsync();
-    }
+
 
     public async Task<PropertyItem?> GetByIdAsync(long id)
     {
-        return await _repository.GetByIdAsync(id);
+        return await _repository.GetAsync(id);
     }
 
     public async Task CreateAsync(PropertyItem propertyItem)
     {
-        await _repository.AddAsync(new PropertyItem
+        await _repository.CreateAsync(new PropertyItem
         {
             Id = propertyItem.Id,
             PropertyIdentificationNumber = propertyItem.PropertyIdentificationNumber,
             Address = propertyItem.Address,
             YearOfConstruction = propertyItem.YearOfConstruction,
             PropertyType= propertyItem.PropertyType,
-            OwnerVAT = propertyItem.OwnerVAT,
+            PropertyOwnerVatNumber = propertyItem.PropertyOwnerVatNumber,
         });
 
 
@@ -43,9 +41,9 @@ public class PropertyItemService: IPropertyItemService
     //    await _repository.UpdateAsync(propertyItem);
     //}
 
-    public async Task<PropertyItem?> DeletePermanentlyAsync(long id)
+    public async Task<bool> DeletePermanentlyAsync(long id)
     {
-        return await _repository.DeletePermanentlyAsync(id);
+        return await _repository.DeleteAsync(id);
     }
     public async Task<PropertyItem?> DeactivateAsync(long id)
     {
