@@ -12,9 +12,8 @@ namespace TechnicoApp.Services;
 /// </summary>
 public interface IPropertyOwnerService
 {
-    ResponseApi<PropertyOwnerDto> Register(PropertyOwnerDto propertyOwnerDto); //Is like Create
-    ResponseApi<PropertyOwnerDto> GetDetails(string vatNumber); //Is like Get(K id)
-    ResponseApi<PropertyOwnerDto> Update(string vatNumber, PropertyOwnerDto propertyOwnerDto);
-    ResponseApi<bool> Delete(string vatNumber);
+    Task<ResponseApi<PropertyOwnerDto>> RegisterAsync(PropertyOwnerDto propertyOwnerDto); // Is like Create
+    Task<ResponseApi<PropertyOwnerDto>> GetDetailsAsync(string vatNumber); // Is like Get(K id)
+    Task<ResponseApi<PropertyOwnerDto>> UpdateAsync(string vatNumber, PropertyOwnerDto propertyOwnerDto);
+    Task<ResponseApi<bool>> DeleteAsync(string vatNumber);
 }
-

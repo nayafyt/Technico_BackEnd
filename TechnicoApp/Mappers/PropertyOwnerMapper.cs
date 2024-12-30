@@ -55,6 +55,7 @@ public class PropertyOwnerMapper : IMapper<PropertyOwner, PropertyOwnerDto>
             Email = propertyOwnerDto.Email,
             Password = propertyOwnerDto.Password, // Consider whether the password should be handled securely
             UserType = propertyOwnerDto.UserType
+
         };
     }
 }

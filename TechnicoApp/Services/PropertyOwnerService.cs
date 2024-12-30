@@ -24,11 +24,12 @@ public class PropertyOwnerService : IPropertyOwnerService
         _mapper = new PropertyOwnerMapper();
     }
 
-    public ResponseApi<PropertyOwnerDto> Register(PropertyOwnerDto propertyOwnerDto)
+    public async Task<ResponseApi<PropertyOwnerDto>> RegisterAsync(PropertyOwnerDto propertyOwnerDto)
     {
-        if (_repository.Read(propertyOwnerDto.VatNumber) != null)
+        if (await _repository.ReadAsync(propertyOwnerDto.VatNumber) != null)
         {
-            return new ResponseApi<PropertyOwnerDto>() {
+            return new ResponseApi<PropertyOwnerDto>()
+            {
                 StatusCode = 409,
                 Description = "You are already registered."
             };
@@ -37,7 +38,7 @@ public class PropertyOwnerService : IPropertyOwnerService
         var propertyOwner = _mapper.GetModel(propertyOwnerDto);
 
         // Save property owner in repository
-        _repository.Create(propertyOwner);
+        await _repository.CreateAsync(propertyOwner);
 
         // Map the entity to DTO and return
         var resultDto = _mapper.GetDto(propertyOwner);
@@ -49,9 +50,9 @@ public class PropertyOwnerService : IPropertyOwnerService
         };
     }
 
-    public ResponseApi<PropertyOwnerDto> GetDetails(string vatNumber)
+    public async Task<ResponseApi<PropertyOwnerDto>> GetDetailsAsync(string vatNumber)
     {
-        var propertyOwner = _repository.Read(vatNumber);
+        var propertyOwner = await _repository.ReadAsync(vatNumber);
 
         if (propertyOwner == null)
         {
@@ -68,13 +69,13 @@ public class PropertyOwnerService : IPropertyOwnerService
         {
             Value = propertyOwnerDto,
             StatusCode = 200,
-            Description = "The property owner details is shown."
+            Description = "The property owner details are shown."
         };
     }
 
-    public ResponseApi<PropertyOwnerDto> Update(string vatNumber, PropertyOwnerDto propertyOwnerDto)
+    public async Task<ResponseApi<PropertyOwnerDto>> UpdateAsync(string vatNumber, PropertyOwnerDto propertyOwnerDto)
     {
-        var propertyOwner = _repository.Read(vatNumber);
+        var propertyOwner = await _repository.ReadAsync(vatNumber);
 
         if (propertyOwner == null)
         {
@@ -87,10 +88,10 @@ public class PropertyOwnerService : IPropertyOwnerService
 
         var propertyOwnerUpdated = _mapper.GetModel(propertyOwnerDto);
         // Save changes in the repository
-        _repository.Update(vatNumber,propertyOwnerUpdated);
+        await _repository.UpdateAsync(vatNumber, propertyOwnerUpdated);
 
         // Map the entity to DTO and return
-        var resultDto = _mapper.GetDto(propertyOwner);
+        var resultDto = _mapper.GetDto(propertyOwnerUpdated);
         return new ResponseApi<PropertyOwnerDto>()
         {
             Value = resultDto,
@@ -99,20 +100,21 @@ public class PropertyOwnerService : IPropertyOwnerService
         };
     }
 
-    public ResponseApi<bool> Delete(string vatNumber)
+    public async Task<ResponseApi<bool>> DeleteAsync(string vatNumber)
     {
-        var propertyOwner = _repository.Read(vatNumber);
+        var propertyOwner = await _repository.ReadAsync(vatNumber);
 
         if (propertyOwner == null)
         {
-            return new ResponseApi<bool>() { 
-                StatusCode = 409, 
+            return new ResponseApi<bool>()
+            {
+                StatusCode = 409,
                 Description = "Property owner not found.",
                 Value = false
             };
         }
         // Delete the property owner from the repository
-        _repository.Delete(vatNumber);
+        await _repository.DeleteAsync(vatNumber);
 
         return new ResponseApi<bool>()
         {

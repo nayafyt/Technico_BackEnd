@@ -12,7 +12,7 @@ namespace TechnicoApp.Repositories;
 /// </summary>
 /// <typeparam name="T">The type of entity.</typeparam>
 /// <typeparam name="K">The type of the entity's id.</typeparam>
-public class MemoryRepository<T, K> : IRepository<T, K>
+public class MemoryRepository<T, K>
     where T : IEntity<K>
 {
     private List<T> _ts = [];

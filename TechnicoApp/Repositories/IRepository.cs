@@ -11,15 +11,15 @@ namespace TechnicoApp.Repositories;
 /// </summary>
 /// <typeparam name="T">The type of the entity.</typeparam>
 /// <typeparam name="K">The type of the entity's id.</typeparam>
-public interface IRepository<T, K>
+public interface IRepository<T, K> where T : class
 {
-    T Create(T t);
-    T? Read(K id);
-    List<T> Read();
-    T? Update(K id, T t);
-    bool Delete(K id);
-}
+    Task<T?> CreateAsync(T t);
+    Task<T?> GetAsync(K id);
+    Task<List<T>> GetAsync(int pageCount, int pageSize);
+    Task<T?> UpdateAsync(T t);
+    Task<bool> DeleteAsync(K id);
 
+}
 
 
 
