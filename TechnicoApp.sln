@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicoApp", "TechnicoApp\TechnicoApp.csproj", "{5EBC5BE9-55FE-40E6-8EB7-03CD0C709167}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Technico.WebAPI", "Technico.WebAPI\Technico.WebAPI.csproj", "{C9FA8881-39F5-4D49-B130-75B1EE8B851E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5EBC5BE9-55FE-40E6-8EB7-03CD0C709167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EBC5BE9-55FE-40E6-8EB7-03CD0C709167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EBC5BE9-55FE-40E6-8EB7-03CD0C709167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9FA8881-39F5-4D49-B130-75B1EE8B851E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9FA8881-39F5-4D49-B130-75B1EE8B851E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9FA8881-39F5-4D49-B130-75B1EE8B851E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9FA8881-39F5-4D49-B130-75B1EE8B851E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
