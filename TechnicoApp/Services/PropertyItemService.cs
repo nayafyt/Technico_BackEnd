@@ -58,6 +58,14 @@ public class PropertyItemService: IPropertyItemService
 
         var propertyItem = _mapper.GetModel(propertyItemDto);
 
+        if (propertyItem == null)
+        {
+            return new ResponseApi<PropertyItemDto>()
+            {
+                StatusCode = 10,
+                Description = "Property item can't convert to model."
+            };
+        }
         // Save property owner in repository
         await _repository.CreateAsync(propertyItem);
 

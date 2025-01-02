@@ -20,7 +20,7 @@ public class PropertyOwner : IEntity<string>
     /// <summary>
     /// Gets or sets the VAT number of the property owner. This serves as the unique identifier.
     /// </summary>
-    public string VatNumber { get; set; } = string.Empty;
+    public required string VatNumber { get; set; }
 
     public string Name { get; set; } = string.Empty;
 

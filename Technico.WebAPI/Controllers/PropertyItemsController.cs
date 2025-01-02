@@ -5,7 +5,7 @@ using TechnicoApp.Dtos;
 namespace Technico.WebAPI.Controllers;
 
 [ApiController]
-[Route("api/property-items")]
+[Route("api/[controller]")]
 public class PropertyItemsController : ControllerBase
 {
     private readonly IPropertyItemService _service;

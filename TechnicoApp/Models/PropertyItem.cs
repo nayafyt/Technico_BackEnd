@@ -7,17 +7,38 @@ using TechnicoApp.Models;
 
 namespace TechnicoApp.Domain.Models;
 
-public class PropertyItem: IEntity<long>
+
+/// <summary>
+/// Represents a property item in the system, that is owned by a PropertyOwner.
+/// </summary>
+public class PropertyItem : IEntity<long>
 {
-    public long Id { get; set; } 
-    public long PropertyIdentificationNumber { get; set; }
-    public string Address { get; set; } = string.Empty; 
+    /// <summary>
+    /// Gets or sets the unique id for the property item, which is mapped to the PropertyIdentificationNumber .
+    /// </summary>
+    public long Id {
+        get => PropertyIdentificationNumber; 
+        set => PropertyIdentificationNumber = value; 
+    }
+
+    /// <summary>
+    /// Gets or sets the PropertyIdenticationNumber of the property item. This serves as the unique identifier.
+    /// </summary>
+    public required long PropertyIdentificationNumber { get; set; }
+    public string Address { get; set; } = string.Empty;
     public int YearOfConstruction { get; set; }
     public PropertyType PropertyType { get; set; }
 
-    public string PropertyOwnerVatNumber { get; set; } = string.Empty; //foreign key
+    /// <summary>
+    /// Gets or sets the PropertyOwnerVatNumber of the property item. 
+    /// This serves as a foreign key linking to the property owner's VAT number.
+    /// </summary>
+    public required string PropertyOwnerVatNumber { get; set; }
 
-    // Soft-delete flag
-    public bool IsActive { get; set; } = true; // Default to active
+    /// <summary>
+    /// Gets or sets a value indicating whether the property item is active. 
+    /// Used as a soft-delete flag, defaulting to true (active).
+    /// </summary>
+    public bool IsActive { get; set; } = true;
 
 }

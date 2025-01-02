@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TechnicoApp.Domain.Models;
 
+/// <summary>
+/// Represents the types of property items in the system.
+/// </summary>
 public enum PropertyType
 {
     Detached, Maisonet, Apartment

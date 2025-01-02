@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
 using TechnicoApp.Dtos;
 using TechnicoApp.Mappers;
@@ -36,7 +37,13 @@ public class PropertyOwnerService : IPropertyOwnerService
         }
 
         var propertyOwner = _mapper.GetModel(propertyOwnerDto);
-
+        if (propertyOwner == null) { 
+            return new ResponseApi<PropertyOwnerDto>()
+            {
+                StatusCode = 10,
+                Description = "Cannot convert to model."
+            };
+            }
         // Save property owner in repository
         await _repository.CreateAsync(propertyOwner);
 

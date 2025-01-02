@@ -15,7 +15,7 @@ namespace TechnicoApp.Dtos;
 /// </summary>
 public class PropertyOwnerDto
 {
-    public string VatNumber { get; set; } = string.Empty;
+    public required string VatNumber { get; set; }  
     public string Name { get; set; } = string.Empty;
     public string Surname { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;

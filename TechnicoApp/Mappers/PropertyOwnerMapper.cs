@@ -58,4 +58,6 @@ public class PropertyOwnerMapper : IMapper<PropertyOwner, PropertyOwnerDto>
 
         };
     }
+  
+
 }
