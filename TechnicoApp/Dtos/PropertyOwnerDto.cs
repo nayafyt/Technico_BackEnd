@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TechnicoApp.Domain.Models;
 using TechnicoApp.Models;
 
 namespace TechnicoApp.Dtos;
@@ -27,5 +28,6 @@ public class PropertyOwnerDto
     /// Gets or sets the type of user (User or Admin).
     /// </summary>
     public UserType UserType { get; set; }
+    public List<PropertyItemDto> PropertyItems { get; set; } = new ();
 }
 

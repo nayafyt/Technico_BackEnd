@@ -19,7 +19,6 @@ public interface IRepository<T, K> where T : class
     Task<List<T>> GetAsync();
     Task<T?> UpdateAsync(T t);
     Task<bool> DeleteAsync(K id);
-    Task<T?> DeactivateAsync(K id);
 
 }
 

@@ -11,8 +11,8 @@ using TechnicoApp.Context;
 namespace TechnicoApp.Migrations
 {
     [DbContext(typeof(TechnicoDbContext))]
-    [Migration("20250102203322_ChangeIdPropertyItem")]
-    partial class ChangeIdPropertyItem
+    [Migration("20250102223527_IdChange")]
+    partial class IdChange
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,21 +74,18 @@ namespace TechnicoApp.Migrations
 
             modelBuilder.Entity("TechnicoApp.Domain.Models.PropertyItem", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<long>("PropertyIdentificationNumber")
                         .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<long>("PropertyIdentificationNumber")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("PropertyOwnerId")
                         .HasColumnType("nvarchar(450)");
@@ -103,7 +100,7 @@ namespace TechnicoApp.Migrations
                     b.Property<int>("YearOfConstruction")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("PropertyIdentificationNumber");
 
                     b.HasIndex("PropertyOwnerId");
 

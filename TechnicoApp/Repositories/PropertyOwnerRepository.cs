@@ -57,14 +57,4 @@ public class PropertyOwnerRepository : IRepository<PropertyOwner, string>
     }
 
 
-    public async Task<PropertyOwner?> DeactivateAsync(string id)
-    {
-        var propertyOwner = await _context.PropertyOwners.FindAsync(id);
-        if (propertyOwner == null) return default;
-        propertyOwner.IsActive = false;
-        _context.PropertyOwners.Update(propertyOwner);
-        await _context.SaveChangesAsync();
-
-        return propertyOwner;
-    }
 }

@@ -16,6 +16,7 @@ public class TechnicoDbContext : DbContext
     public TechnicoDbContext()
     {
     }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
@@ -24,6 +25,29 @@ public class TechnicoDbContext : DbContext
 
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<PropertyItem>(entity =>
+        {
+            // Configure PropertyIdentificationNumber as the primary key
+            entity.HasKey(e => e.PropertyIdentificationNumber);
+
+            // Configure Id as an auto-generated column, not an identity
+            entity.Property(e => e.Id)
+                  .ValueGeneratedNever(); // This prevents Id from using the Identity property
+
+            // Ensure PropertyIdentificationNumber does not use Identity
+            entity.Property(e => e.PropertyIdentificationNumber)
+                  .ValueGeneratedNever();
+        });
+    }
+
 
 }
+
+
+
+
 

@@ -10,16 +10,3 @@ Console.WriteLine($"""
         Naya Fytali
         """);
 
-PropertyItem propertyItem = new PropertyItem()
-{
-    PropertyIdentificationNumber = 1,
-    YearOfConstruction = 2000,
-    Address = "MariasPIs",
-    PropertyOwnerVatNumber = "987654321",
-    IsActive = true,
-    PropertyType = 0
-};
-
-TechnicoDbContext _context = new TechnicoDbContext();
-_context.Add(propertyItem);
-_context.SaveChanges();

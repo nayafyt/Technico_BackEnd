@@ -11,7 +11,7 @@ using TechnicoApp.Repositories;
 
 namespace TechnicoApp.Domain.Infrastructure.Repositories;
 
-public class PropertyItemRepository : IRepository<PropertyItem, long>
+public class PropertyItemRepository : IRepository<PropertyItem, long>, IPropertyItemRepository
 {
     private readonly TechnicoDbContext _context;
 
@@ -67,6 +67,13 @@ public class PropertyItemRepository : IRepository<PropertyItem, long>
         await _context.SaveChangesAsync();
         
         return propertyItem;
+    }
+
+    public async Task<List<PropertyItem>> GetByOwnerVatNumberAsync(string vatNumber)
+    {
+        return await _context.Set<PropertyItem>()
+            .Where(item => item.PropertyOwnerVatNumber == vatNumber)
+            .ToListAsync();
     }
 
 }

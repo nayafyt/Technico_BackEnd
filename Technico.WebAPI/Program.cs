@@ -23,6 +23,7 @@ builder.Services.AddDbContext<TechnicoDbContext>(options =>
 builder.Services.AddScoped<IPropertyItemService, PropertyItemService>();
 builder.Services.AddScoped<IPropertyOwnerService, PropertyOwnerService>();
 builder.Services.AddScoped<IRepository<PropertyItem, long>, PropertyItemRepository>();
+builder.Services.AddScoped<IPropertyItemRepository, PropertyItemRepository>();
 builder.Services.AddScoped<IRepository<PropertyOwner, string>, PropertyOwnerRepository>();
 
 

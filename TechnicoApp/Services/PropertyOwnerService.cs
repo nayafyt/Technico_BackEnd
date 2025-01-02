@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
+using TechnicoApp.Domain.Infrastructure.Repositories;
+using TechnicoApp.Domain.Models;
 using TechnicoApp.Dtos;
 using TechnicoApp.Mappers;
 using TechnicoApp.Repositories;
@@ -17,12 +19,14 @@ namespace TechnicoApp.Services;
 public class PropertyOwnerService : IPropertyOwnerService
 {
     private readonly IRepository<PropertyOwner, string> _repository;
+    private readonly IPropertyItemRepository _propertyItemRepository;
     private readonly IMapper<PropertyOwner, PropertyOwnerDto> _mapper;
 
-    public PropertyOwnerService(IRepository<PropertyOwner, string> repository)
+    public PropertyOwnerService(IRepository<PropertyOwner, string> repository,IPropertyItemRepository propertyItemRepository)
     {
         _repository = repository;
         _mapper = new PropertyOwnerMapper();
+        _propertyItemRepository = propertyItemRepository;
     }
 
     public async Task<ResponseApi<PropertyOwnerDto>> RegisterAsync(PropertyOwnerDto propertyOwnerDto)
@@ -70,7 +74,23 @@ public class PropertyOwnerService : IPropertyOwnerService
             };
         }
 
+        // Fetch associated property items
+        var propertyItems = await _propertyItemRepository.GetByOwnerVatNumberAsync(vatNumber);
+
+
+        // Map property owner to DTO
         var propertyOwnerDto = _mapper.GetDto(propertyOwner);
+
+        // Map and include property items in the DTO
+        propertyOwnerDto.PropertyItems = propertyItems.Select(item => new PropertyItemDto
+        { 
+            PropertyIdentificationNumber = item.PropertyIdentificationNumber,
+            Address = item.Address,
+            YearOfConstruction = item.YearOfConstruction,
+            PropertyType = item.PropertyType,
+            PropertyOwnerVatNumber = item.PropertyOwnerVatNumber
+        }).ToList();
+
 
         return new ResponseApi<PropertyOwnerDto>()
         {

@@ -37,11 +37,22 @@ public class PropertyItemsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = result.Value.PropertyIdentificationNumber }, result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("Permanent/{id}")]
     public async Task<IActionResult> Delete(long id)
     {
         var result = await _service.DeletePermanentlyAsync(id);
         if (!result.Value)
+        {
+            return NotFound(result);
+        }
+        return NoContent();
+    }
+
+    [HttpDelete("Deactivate/{id}")]
+    public async Task<IActionResult> SoftDelete(long id)
+    {
+        var result = await _service.DeactivateAsync(id);
+        if (result.Value == null)
         {
             return NotFound(result);
         }

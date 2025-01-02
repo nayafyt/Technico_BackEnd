@@ -50,7 +50,7 @@ public class PropertyOwnerMapper : IMapper<PropertyOwner, PropertyOwnerDto>
             VatNumber = propertyOwnerDto.VatNumber,
             Name = propertyOwnerDto.Name,
             Surname = propertyOwnerDto.Surname,
-            Address = propertyOwnerDto.Address, 
+            Address = propertyOwnerDto.Address,
             PhoneNumber = propertyOwnerDto.PhoneNumber,
             Email = propertyOwnerDto.Email,
             Password = propertyOwnerDto.Password, // Consider whether the password should be handled securely

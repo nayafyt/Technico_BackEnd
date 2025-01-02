@@ -5,7 +5,7 @@
 namespace TechnicoApp.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangeIdPropertyItem : Migration
+    public partial class IdChange : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

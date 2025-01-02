@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Identity.Client.AuthScheme.PoP;
 using TechnicoApp.Domain.Interfaces;
 using TechnicoApp.Domain.Models;
 using TechnicoApp.Dtos;
@@ -10,11 +11,13 @@ namespace TechnicoApp.Services;
 public class PropertyItemService: IPropertyItemService
 {
     private readonly IRepository<PropertyItem, long> _repository;
+    private readonly IPropertyItemRepository _propertyItemRepository;   
     private readonly IMapper<PropertyItem, PropertyItemDto> _mapper;
 
-    public PropertyItemService(IRepository<PropertyItem, long> repository)
+    public PropertyItemService(IRepository<PropertyItem, long> repository, IPropertyItemRepository propertyItemRepository)
     {
         _repository = repository;
+        _propertyItemRepository = propertyItemRepository;
         _mapper = new PropertyItemMapper();
     }
 
@@ -122,7 +125,7 @@ public class PropertyItemService: IPropertyItemService
             };
         }
         // Delete the property owner from the repository
-        await _repository.DeactivateAsync(id);
+        await _propertyItemRepository.DeactivateAsync(id);
         var propertyItemDto = _mapper.GetDto(propertyItem);
 
         return new ResponseApi<PropertyItemDto>()
