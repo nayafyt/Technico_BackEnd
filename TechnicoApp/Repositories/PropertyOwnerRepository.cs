@@ -26,7 +26,9 @@ public class PropertyOwnerRepository : IRepository<PropertyOwner, string>
 
     public async Task<PropertyOwner?> GetAsync(string vatNumber)
     {
-        return await _context.PropertyOwners.FindAsync(vatNumber);
+        return await _context.PropertyOwners
+        .AsNoTracking()
+        .FirstOrDefaultAsync(p => p.VatNumber == vatNumber);
     }
 
     public async Task<List<PropertyOwner>> GetAsync()

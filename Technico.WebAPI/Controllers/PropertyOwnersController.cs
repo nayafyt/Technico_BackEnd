@@ -6,117 +6,63 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TechnicoApp.Context;
+using TechnicoApp.Dtos;
 using TechnicoApp.Services;
 
-namespace Technico.WebAPI.Controllers
+namespace Technico.WebAPI.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class PropertyOwnersController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class PropertyOwnersController : ControllerBase
+    private readonly IPropertyOwnerService _service;
+
+    public PropertyOwnersController(IPropertyOwnerService service)
     {
-        private readonly TechnicoDbContext _context;
+        _service = service;
+    }
 
-        public PropertyOwnersController(TechnicoDbContext context)
+    [HttpGet("{vatNumber}")]
+    public async Task<IActionResult> GetDetails(string vatNumber)
+    {
+        var result = await _service.GetDetailsAsync(vatNumber);
+        if (result.Value == null)
         {
-            _context = context;
+            return NotFound(result);
         }
+        return Ok(result);
+    }
 
-        // GET: api/PropertyOwners
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<PropertyOwner>>> GetPropertyOwners()
+    [HttpPost]
+    public async Task<IActionResult> Register([FromBody] PropertyOwnerDto dto)
+    {
+        var result = await _service.RegisterAsync(dto);
+        if (result.StatusCode == 409)
         {
-            return await _context.PropertyOwners.ToListAsync();
+            return Conflict(result);
         }
+        return CreatedAtAction(nameof(GetDetails), new { vatNumber = result.Value.VatNumber }, result);
+    }
 
-        // GET: api/PropertyOwners/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PropertyOwner>> GetPropertyOwner(string id)
+    [HttpPut("{vatNumber}")]
+    public async Task<IActionResult> Update(string vatNumber, [FromBody] PropertyOwnerDto dto)
+    {
+        var result = await _service.UpdateAsync(vatNumber, dto);
+        if (result.Value == null)
         {
-            var propertyOwner = await _context.PropertyOwners.FindAsync(id);
-
-            if (propertyOwner == null)
-            {
-                return NotFound();
-            }
-
-            return propertyOwner;
+            return NotFound(result);
         }
+        return Ok(result);
+    }
 
-        // PUT: api/PropertyOwners/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPropertyOwner(string id, PropertyOwner propertyOwner)
+    [HttpDelete("{vatNumber}")]
+    public async Task<IActionResult> Delete(string vatNumber)
+    {
+        var result = await _service.DeleteAsync(vatNumber);
+        if (!result.Value)
         {
-            if (id != propertyOwner.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(propertyOwner).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PropertyOwnerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return NotFound(result);
         }
-
-        // POST: api/PropertyOwners
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<PropertyOwner>> PostPropertyOwner(PropertyOwner propertyOwner)
-        {
-            _context.PropertyOwners.Add(propertyOwner);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (PropertyOwnerExists(propertyOwner.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetPropertyOwner", new { id = propertyOwner.Id }, propertyOwner);
-        }
-
-        // DELETE: api/PropertyOwners/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePropertyOwner(string id)
-        {
-            var propertyOwner = await _context.PropertyOwners.FindAsync(id);
-            if (propertyOwner == null)
-            {
-                return NotFound();
-            }
-
-            _context.PropertyOwners.Remove(propertyOwner);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool PropertyOwnerExists(string id)
-        {
-            return _context.PropertyOwners.Any(e => e.Id == id);
-        }
+        return NoContent();
     }
 }

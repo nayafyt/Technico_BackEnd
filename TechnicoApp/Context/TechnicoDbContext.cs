@@ -22,6 +22,7 @@ public class TechnicoDbContext : DbContext
         base.OnConfiguring(optionsBuilder);
         optionsBuilder.UseSqlServer("Data Source = localhost; Initial Catalog = Technico_DB; Trusted_Connection = true; TrustServerCertificate = true");
         //optionsBuilder.EnableSensitiveDataLogging();
+        optionsBuilder.EnableSensitiveDataLogging();
 
     }
 

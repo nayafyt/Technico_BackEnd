@@ -36,6 +36,7 @@ public class PropertyItemRepository : IRepository<PropertyItem, long>
     public async Task<List<PropertyItem>> GetAsync()
     {
         return await _context.PropertyItems
+                    .AsNoTracking()
                     .Where(p => p.IsActive)
                     .ToListAsync();
     }
