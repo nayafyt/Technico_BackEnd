@@ -76,5 +76,6 @@ public class PropertyItemRepository : IRepository<PropertyItem, long>, IProperty
             .ToListAsync();
     }
 
+
 }
 

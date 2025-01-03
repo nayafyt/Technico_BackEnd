@@ -20,6 +20,7 @@ public interface IRepository<T, K> where T : class
     Task<T?> UpdateAsync(T t);
     Task<bool> DeleteAsync(K id);
 
+
 }
 
 
