@@ -1,5 +1,4 @@
-﻿using TechnicoApp.Domain.Models;
-using TechnicoApp.Models;
+﻿using TechnicoApp.Models;
 
 namespace TechnicoApp.Dtos;
 

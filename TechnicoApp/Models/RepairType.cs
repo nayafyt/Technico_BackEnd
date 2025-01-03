@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace TechnicoApp.Models;
 
-/// <summary>
-/// Represents the types of property items in the system.
-/// </summary>
-public enum PropertyType
+public enum RepairType
 {
-    Detached, Maisonet, Apartment
-
+    Painting, Insulation, Frames, Plumbing, ElectricalWork
 }

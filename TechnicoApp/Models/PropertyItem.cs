@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TechnicoApp.Models;
 
-namespace TechnicoApp.Domain.Models;
+namespace TechnicoApp.Models;
 
 
 /// <summary>
@@ -16,7 +16,10 @@ public class PropertyItem : IEntity<long>
     /// <summary>
     /// Gets or sets the unique id for the property item, which is mapped to the PropertyIdentificationNumber .
     /// </summary>
-    public long Id { get =>PropertyIdentificationNumber; set=>PropertyIdentificationNumber =value; }
+    public long Id { 
+        get =>PropertyIdentificationNumber; 
+        set=>PropertyIdentificationNumber =value; 
+    }
 
     /// <summary>
     /// Gets or sets the PropertyIdenticationNumber of the property item. This serves as the unique identifier.

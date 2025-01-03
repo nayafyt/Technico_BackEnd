@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using TechnicoApp.Domain.Models;
+using TechnicoApp.Models;
 
 
 namespace TechnicoApp.Context;
@@ -9,7 +9,7 @@ public class TechnicoDbContext : DbContext
 {
     public DbSet<PropertyItem> PropertyItems { get; set; }
     public DbSet<PropertyOwner> PropertyOwners { get; set; }
-
+    public DbSet<PropertyRepair> PropertyRepairs { get; set; }
     public TechnicoDbContext(DbContextOptions<TechnicoDbContext> options) : base(options)
     {
     }

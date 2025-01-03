@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
-using TechnicoApp.Domain.Infrastructure.Repositories;
-using TechnicoApp.Domain.Models;
+
 using TechnicoApp.Dtos;
 using TechnicoApp.Mappers;
+using TechnicoApp.Models;
 using TechnicoApp.Repositories;
 
 namespace TechnicoApp.Services;
@@ -19,10 +19,10 @@ namespace TechnicoApp.Services;
 public class PropertyOwnerService : IPropertyOwnerService
 {
     private readonly IRepository<PropertyOwner, string> _repository;
-    private readonly IPropertyItemRepository _propertyItemRepository;
+    private readonly IPropertyRepository<PropertyItem,long> _propertyItemRepository;
     private readonly IMapper<PropertyOwner, PropertyOwnerDto> _mapper;
 
-    public PropertyOwnerService(IRepository<PropertyOwner, string> repository,IPropertyItemRepository propertyItemRepository)
+    public PropertyOwnerService(IRepository<PropertyOwner, string> repository,IPropertyRepository<PropertyItem,long> propertyItemRepository)
     {
         _repository = repository;
         _mapper = new PropertyOwnerMapper();
@@ -80,7 +80,14 @@ public class PropertyOwnerService : IPropertyOwnerService
 
         // Map property owner to DTO
         var propertyOwnerDto = _mapper.GetDto(propertyOwner);
+        if (propertyOwnerDto == null) {
+            return new ResponseApi<PropertyOwnerDto>()
+            {
+                StatusCode = 10,
+                Description = "The property owner coulnd't convert to dto."
+            };
 
+        }
         // Map and include property items in the DTO
         propertyOwnerDto.PropertyItems = propertyItems.Select(item => new PropertyItemDto
         { 

@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TechnicoApp.Context;
-using TechnicoApp.Domain.Interfaces;
-using TechnicoApp.Domain.Models;
-using TechnicoApp.Repositories;
+using TechnicoApp.Models;
 
-namespace TechnicoApp.Domain.Infrastructure.Repositories;
 
-public class PropertyItemRepository : IRepository<PropertyItem, long>, IPropertyItemRepository
+namespace TechnicoApp.Repositories;
+
+public class PropertyItemRepository : IRepository<PropertyItem, long>, IPropertyRepository<PropertyItem, long>
 {
     private readonly TechnicoDbContext _context;
 

@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using TechnicoApp.Context;
-using TechnicoApp.Domain.Infrastructure.Repositories;
 using TechnicoApp.Domain.Interfaces;
-using TechnicoApp.Domain.Models;
+
+using TechnicoApp.Models;
 using TechnicoApp.Repositories;
 using TechnicoApp.Services;
 
@@ -23,7 +23,7 @@ builder.Services.AddDbContext<TechnicoDbContext>(options =>
 builder.Services.AddScoped<IPropertyItemService, PropertyItemService>();
 builder.Services.AddScoped<IPropertyOwnerService, PropertyOwnerService>();
 builder.Services.AddScoped<IRepository<PropertyItem, long>, PropertyItemRepository>();
-builder.Services.AddScoped<IPropertyItemRepository, PropertyItemRepository>();
+builder.Services.AddScoped<IPropertyRepository<PropertyItem,long>, PropertyItemRepository>();
 builder.Services.AddScoped<IRepository<PropertyOwner, string>, PropertyOwnerRepository>();
 
 

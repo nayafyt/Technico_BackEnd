@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using TechnicoApp.Domain.Models;
+
 using TechnicoApp.Dtos;
 
 namespace TechnicoApp.Domain.Interfaces;

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TechnicoApp.Context;
-using TechnicoApp.Domain.Models;
 
 namespace TechnicoApp.Repositories;
 

@@ -1,9 +1,10 @@
 ﻿
 using Microsoft.Identity.Client.AuthScheme.PoP;
 using TechnicoApp.Domain.Interfaces;
-using TechnicoApp.Domain.Models;
+
 using TechnicoApp.Dtos;
 using TechnicoApp.Mappers;
+using TechnicoApp.Models;
 using TechnicoApp.Repositories;
 
 namespace TechnicoApp.Services;
@@ -11,10 +12,10 @@ namespace TechnicoApp.Services;
 public class PropertyItemService: IPropertyItemService
 {
     private readonly IRepository<PropertyItem, long> _repository;
-    private readonly IPropertyItemRepository _propertyItemRepository;   
+    private readonly IPropertyRepository<PropertyItem,long> _propertyItemRepository;   
     private readonly IMapper<PropertyItem, PropertyItemDto> _mapper;
 
-    public PropertyItemService(IRepository<PropertyItem, long> repository, IPropertyItemRepository propertyItemRepository)
+    public PropertyItemService(IRepository<PropertyItem, long> repository, IPropertyRepository<PropertyItem,long> propertyItemRepository)
     {
         _repository = repository;
         _propertyItemRepository = propertyItemRepository;

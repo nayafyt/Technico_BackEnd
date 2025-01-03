@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TechnicoApp.Domain.Models;
+
 using TechnicoApp.Models;
 
 /// <summary>

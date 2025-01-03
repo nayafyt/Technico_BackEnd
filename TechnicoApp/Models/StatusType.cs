@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace TechnicoApp.Models;
 
-/// <summary>
-/// Represents the types of property items in the system.
-/// </summary>
-public enum PropertyType
+public enum StatusType
 {
-    Detached, Maisonet, Apartment
-
+    Pending, InProgress, Complete
 }
