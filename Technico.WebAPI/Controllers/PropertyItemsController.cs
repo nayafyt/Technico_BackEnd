@@ -34,7 +34,7 @@ public class PropertyItemsController : ControllerBase
         {
             return Conflict(result);
         }
-        return CreatedAtAction(nameof(GetById), new { id = result.Value.PropertyIdentificationNumber }, result);
+        return CreatedAtAction(nameof(GetById), new { id = result?.Value?.PropertyIdentificationNumber }, result);
     }
 
     [HttpDelete("Permanent/{id}")]

@@ -10,8 +10,8 @@ namespace TechnicoApp.Services;
 public interface IPropertyRepairService
 {
     Task<ResponseApi<PropertyRepairDto>> CreateAsync(PropertyRepairDto propertyRepairDto);
-    Task<ResponseApi<PropertyRepairDto>> SearchByUserVATNumber(string VATNumber );
-    Task<ResponseApi<PropertyRepairDto>> SearchByDate(DateTime dateTime);
+    Task<ResponseApi<List<PropertyRepairDto>>> SearchByUserVATNumber(string VATNumber);
+    Task<ResponseApi<List<PropertyRepairDto>>> SearchByDate(DateTime dateTime);
     Task<ResponseApi<bool>> DeletePermanentlyAsync(long id);
     Task<ResponseApi<PropertyRepairDto>> DeactivateAsync(long id);
 }

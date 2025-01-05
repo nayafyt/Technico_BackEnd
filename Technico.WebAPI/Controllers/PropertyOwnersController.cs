@@ -41,7 +41,7 @@ public class PropertyOwnersController : ControllerBase
         {
             return Conflict(result);
         }
-        return CreatedAtAction(nameof(GetDetails), new { vatNumber = result.Value.VatNumber }, result);
+        return CreatedAtAction(nameof(GetDetails), new { vatNumber = result?.Value?.VatNumber }, result);
     }
 
     [HttpPut("{vatNumber}")]
