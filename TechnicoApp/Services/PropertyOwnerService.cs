@@ -20,13 +20,15 @@ public class PropertyOwnerService : IPropertyOwnerService
 {
     private readonly IRepository<PropertyOwner, string> _repository;
     private readonly IPropertyRepository<PropertyItem,long> _propertyItemRepository;
+    private readonly IPropertyRepository<PropertyRepair, long> _propertyRepairRepository;
     private readonly IMapper<PropertyOwner, PropertyOwnerDto> _mapper;
 
-    public PropertyOwnerService(IRepository<PropertyOwner, string> repository,IPropertyRepository<PropertyItem,long> propertyItemRepository)
+    public PropertyOwnerService(IRepository<PropertyOwner, string> repository,IPropertyRepository<PropertyItem,long> propertyItemRepository, IPropertyRepository<PropertyRepair, long> propertyRepairRepository)
     {
         _repository = repository;
         _mapper = new PropertyOwnerMapper();
         _propertyItemRepository = propertyItemRepository;
+        _propertyRepairRepository = propertyRepairRepository;
     }
 
     public async Task<ResponseApi<PropertyOwnerDto>> RegisterAsync(PropertyOwnerDto propertyOwnerDto)
@@ -76,6 +78,7 @@ public class PropertyOwnerService : IPropertyOwnerService
 
         // Fetch associated property items
         var propertyItems = await _propertyItemRepository.GetByOwnerVatNumberAsync(vatNumber);
+        var items = await _propertyRepairRepository.GetByOwnerVatNumberAsync(vatNumber);
 
 
         // Map property owner to DTO
@@ -98,6 +101,27 @@ public class PropertyOwnerService : IPropertyOwnerService
             PropertyOwnerVatNumber = item.PropertyOwnerVatNumber
         }).ToList();
 
+        // Map and include property items in the DTO
+        propertyOwnerDto.PropertyRepairs = items.Select(item => new PropertyRepairDto
+        {
+            DateTime = item.DateTime,
+            RepairType = item.RepairType,
+            Description = item.Description,
+            Address = item.Address,
+            Status = item.Status,
+            Cost = item.Cost,
+            PropertyOwnerDto = new PropertyOwnerDto()
+            {
+                VatNumber = item.PropertyOwner.VatNumber,
+                Name = item.PropertyOwner.Name,
+                Surname = item.PropertyOwner.Surname,
+                Address = item.PropertyOwner.Address,
+                Password = item.PropertyOwner.Password,
+                PhoneNumber = item.PropertyOwner.PhoneNumber,
+                Email = item.PropertyOwner.Email,
+                UserType = item.PropertyOwner.UserType
+            }
+        }).ToList();
 
         return new ResponseApi<PropertyOwnerDto>()
         {

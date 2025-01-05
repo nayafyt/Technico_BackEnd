@@ -50,10 +50,6 @@ namespace TechnicoApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("Repairs")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -156,7 +152,7 @@ namespace TechnicoApp.Migrations
             modelBuilder.Entity("TechnicoApp.Models.PropertyRepair", b =>
                 {
                     b.HasOne("PropertyOwner", "PropertyOwner")
-                        .WithMany()
+                        .WithMany("PropertyRepairs")
                         .HasForeignKey("PropertyOwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -167,6 +163,8 @@ namespace TechnicoApp.Migrations
             modelBuilder.Entity("PropertyOwner", b =>
                 {
                     b.Navigation("PropertyItems");
+
+                    b.Navigation("PropertyRepairs");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,14 +15,15 @@ namespace TechnicoApp.Services;
 public class PropertyRepairService : IPropertyRepairService
 {
     private readonly IRepository<PropertyRepair, long> _repository;
-    private readonly IPropertyRepository<PropertyItem, long> _propertyItemRepository;
+    private readonly IPropertyRepository<PropertyRepair, long> _propertyRepairRepository;
 
     private readonly IMapper<PropertyRepair, PropertyRepairDto> _mapper;
 
-    public PropertyRepairService(IRepository<PropertyRepair, long> repository)
+    public PropertyRepairService(IRepository<PropertyRepair, long> repository, IPropertyRepository<PropertyRepair,long> propertyRepairService)
     {
         _repository = repository;
         _mapper = new PropertyRepairMapper();
+        _propertyRepairRepository = propertyRepairService;
     }
 
     public async Task<ResponseApi<PropertyRepairDto>> CreateAsync(PropertyRepairDto propertyRepairDto)
@@ -78,7 +79,7 @@ public class PropertyRepairService : IPropertyRepairService
             };
         }
         // Delete the property owner from the repository
-        await _propertyItemRepository.DeactivateAsync(id);
+        await _propertyRepairRepository.DeactivateAsync(id);
         var propertyRepairDto = _mapper.GetDto(propertyRepair);
 
         return new ResponseApi<PropertyRepairDto>()
@@ -153,10 +154,10 @@ public class PropertyRepairService : IPropertyRepairService
     public async Task<ResponseApi<List<PropertyRepairDto>>> SearchByUserVATNumber(string vatNumber)
     {
         // Fetch all records
-        var repairs = await _repository.GetAsync();
+        var repairs = await _propertyRepairRepository.GetByOwnerVatNumberAsync(vatNumber);
 
         // Map results to DTOs
-        var repairDtos = filteredRepairs
+        var repairDtos = repairs
             .Select(r => _mapper.GetDto(r))
             .Where(dto => dto != null) // Filter out nulls
             .Cast<PropertyRepairDto>() // Cast to non-nullable type

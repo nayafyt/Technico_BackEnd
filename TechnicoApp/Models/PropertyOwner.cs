@@ -49,7 +49,7 @@ public class PropertyOwner : IEntity<string>
     /// Gets or sets the list of repairs associated with the property owner's properties.
     /// A property owner can request multiple repairs for their properties.
     /// </summary>
-    public List<string> Repairs { get; set; } = new();
+    public List<PropertyRepair> PropertyRepairs { get; set; } = new();
 
     // Soft-delete flag
     public bool IsActive { get; set; } = true; // Default to active

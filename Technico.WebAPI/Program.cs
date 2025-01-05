@@ -29,6 +29,7 @@ builder.Services.AddScoped<IRepository<PropertyOwner, string>, PropertyOwnerRepo
 builder.Services.AddScoped<IRepository<PropertyRepair, long>, PropertyRepairRepository>();
 
 builder.Services.AddScoped<IPropertyRepository<PropertyItem,long>, PropertyItemRepository>();
+builder.Services.AddScoped<IPropertyRepository<PropertyRepair, long>, PropertyRepairRepository>();
 
 
 

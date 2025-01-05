@@ -28,5 +28,6 @@ public class PropertyOwnerDto
     /// </summary>
     public UserType UserType { get; set; }
     public List<PropertyItemDto> PropertyItems { get; set; } = new ();
+    public List<PropertyRepairDto> PropertyRepairs { get; set; } = new();
 }
 

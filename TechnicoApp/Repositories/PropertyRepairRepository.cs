@@ -67,7 +67,8 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
     public async Task<List<PropertyRepair>> GetByOwnerVatNumberAsync(string vatNumber)
     {
         return await _context.Set<PropertyRepair>()
-           .Where(item => item.PropertyOwner.VatNumber == vatNumber)
+           .Include(pr => pr.PropertyOwner)
+           .Where(item => item.PropertyOwner != null && item.PropertyOwner.VatNumber.Equals(vatNumber))
            .ToListAsync();
     }
 }

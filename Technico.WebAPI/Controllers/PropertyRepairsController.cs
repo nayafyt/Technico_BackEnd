@@ -24,6 +24,7 @@ namespace Technico.WebAPI.Controllers
         public PropertyRepairsController(IPropertyRepairService service)
         {
             _service = service;
+            _mapper = new PropertyRepairMapper();
         }
 
 
@@ -36,7 +37,7 @@ namespace Technico.WebAPI.Controllers
             {
                 return Conflict(result);
             }
-            return CreatedAtAction(nameof(SearchByUserVATNumber), new { id = result_model.Id }, result);
+            return CreatedAtAction(nameof(SearchByUserVatNumber), new { id = result_model.Id }, result);
         }
 
         // DELETE: api/PropertyRepairs/5

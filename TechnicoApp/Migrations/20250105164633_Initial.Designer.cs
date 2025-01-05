@@ -12,8 +12,8 @@ using TechnicoApp.Context;
 namespace TechnicoApp.Migrations
 {
     [DbContext(typeof(TechnicoDbContext))]
-    [Migration("20250104194852_propertyRepair5")]
-    partial class propertyRepair5
+    [Migration("20250105164633_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,10 +50,6 @@ namespace TechnicoApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.PrimitiveCollection<string>("Repairs")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -159,7 +155,7 @@ namespace TechnicoApp.Migrations
             modelBuilder.Entity("TechnicoApp.Models.PropertyRepair", b =>
                 {
                     b.HasOne("PropertyOwner", "PropertyOwner")
-                        .WithMany()
+                        .WithMany("PropertyRepairs")
                         .HasForeignKey("PropertyOwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -170,6 +166,8 @@ namespace TechnicoApp.Migrations
             modelBuilder.Entity("PropertyOwner", b =>
                 {
                     b.Navigation("PropertyItems");
+
+                    b.Navigation("PropertyRepairs");
                 });
 #pragma warning restore 612, 618
         }
