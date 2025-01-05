@@ -26,16 +26,6 @@ namespace Technico.WebAPI.Controllers
             _service = service;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> SearchByUserVATNumber(string VATNumber)
-        {
-            var result = await _service.SearchByUserVATNumber(VATNumber);
-            if (result.Value == null)
-            {
-                return NotFound(result);
-            }
-            return Ok(result);
-        }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PropertyRepairDto dto)

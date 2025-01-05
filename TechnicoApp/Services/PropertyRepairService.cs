@@ -155,11 +155,6 @@ public class PropertyRepairService : IPropertyRepairService
         // Fetch all records
         var repairs = await _repository.GetAsync();
 
-        // Filter records by date
-        var filteredRepairs = repairs
-            .Where(r => r.PropertyOwner.VatNumber == vatNumber)
-            .ToList();
-
         // Map results to DTOs
         var repairDtos = filteredRepairs
             .Select(r => _mapper.GetDto(r))
