@@ -19,11 +19,10 @@ public class PropertyRepairService : IPropertyRepairService
 
     private readonly IMapper<PropertyRepair, PropertyRepairDto> _mapper;
 
-    public PropertyRepairService(IRepository<PropertyRepair, long> repository, IMapper<PropertyRepair, PropertyRepairDto> mapper, IPropertyRepository<PropertyItem, long> propertyItemRepository)
+    public PropertyRepairService(IRepository<PropertyRepair, long> repository)
     {
         _repository = repository;
-        _mapper = mapper;
-        _propertyItemRepository = propertyItemRepository;
+        _mapper = new PropertyRepairMapper();
     }
 
     public async Task<ResponseApi<PropertyRepairDto>> CreateAsync(PropertyRepairDto propertyRepairDto)

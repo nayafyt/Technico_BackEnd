@@ -25,7 +25,7 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
             Status = propertyRepair.Status,
             Cost = propertyRepair.Cost,
             PropertyOwnerDto = new PropertyOwnerDto() { 
-                VatNumber =propertyRepair.PropertyOwner.VatNumber,
+                VatNumber = propertyRepair.PropertyOwner.VatNumber,
                 Name = propertyRepair.PropertyOwner.Name,
                 Surname = propertyRepair.PropertyOwner.Surname,
                 Address = propertyRepair.PropertyOwner.Address,
