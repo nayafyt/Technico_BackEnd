@@ -101,7 +101,6 @@ public class PropertyRepairService : IPropertyRepairService
 
         return new ResponseApi<bool>()
         {
-            Value = repairDtos,
             StatusCode = 200,
             Description = "Repair deleted successfully.",
             Value = true
