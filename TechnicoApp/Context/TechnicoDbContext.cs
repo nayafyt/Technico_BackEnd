@@ -42,6 +42,9 @@ public class TechnicoDbContext : DbContext
             entity.Property(e => e.PropertyIdentificationNumber)
                   .ValueGeneratedNever();
         });
+        modelBuilder.Entity<PropertyRepair>()
+                    .Property(p => p.Cost)
+                    .HasColumnType("decimal(18,2)");
     }
 
 
