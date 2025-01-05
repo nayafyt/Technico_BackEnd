@@ -10,6 +10,7 @@ public class PropertyItemsController : ControllerBase
 {
     private readonly IPropertyItemService _service;
 
+
     public PropertyItemsController(IPropertyItemService service)
     {
         _service = service;
