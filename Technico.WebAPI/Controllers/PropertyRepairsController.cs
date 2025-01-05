@@ -73,5 +73,36 @@ namespace Technico.WebAPI.Controllers
             return NoContent();
         }
 
+        [HttpGet("search-by-date")]
+        public async Task<IActionResult> SearchByDate([FromQuery] DateTime date)
+        {
+            var response = await _service.SearchByDate(date);
+
+            if (response.StatusCode == 10)
+            {
+                return NotFound(new { response.Description });
+            }
+
+            return Ok(new { response.Value, response.Description });
+        }
+
+        [HttpGet("search-by-vat")]
+        public async Task<IActionResult> SearchByUserVatNumber([FromQuery] string vatNumber)
+        {
+            if (string.IsNullOrWhiteSpace(vatNumber))
+            {
+                return BadRequest(new { Description = "VAT number is required." });
+            }
+
+            var response = await _service.SearchByUserVATNumber(vatNumber);
+
+            if (response.StatusCode == 10)
+            {
+                return NotFound(new { response.Description });
+            }
+
+            return Ok(new { response.Value, response.Description });
+        }
+
     }
 }
