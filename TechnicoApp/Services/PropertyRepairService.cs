@@ -148,7 +148,6 @@ public class PropertyRepairService : IPropertyRepairService
             Description = "Collection of repairs for the requested date."
         };
 
-
     }
 
     public async Task<ResponseApi<List<PropertyRepairDto>>> SearchByUserVATNumber(string vatNumber)
@@ -180,7 +179,6 @@ public class PropertyRepairService : IPropertyRepairService
         };
     }
 
- 
 }
 
     
