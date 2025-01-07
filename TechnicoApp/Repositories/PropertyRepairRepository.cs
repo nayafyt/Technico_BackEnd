@@ -9,7 +9,7 @@ using TechnicoApp.Models;
 
 namespace TechnicoApp.Repositories;
 
-public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IPropertyRepository<PropertyRepair,long>
+public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IPropertyRepository<PropertyRepair,long>, IPropertyRepairRepository
 {
     private readonly TechnicoDbContext _context;
 
@@ -70,5 +70,12 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
            .Include(pr => pr.PropertyOwner)
            .Where(item => item.PropertyOwner != null && item.PropertyOwner.VatNumber.Equals(vatNumber))
            .ToListAsync();
+    }
+
+    public async Task<List<PropertyRepair>> GetByDate(DateOnly date)
+    {
+        return await _context.Set<PropertyRepair>()
+               .Where(item => DateOnly.FromDateTime(item.DateTime) == date)
+               .ToListAsync();
     }
 }

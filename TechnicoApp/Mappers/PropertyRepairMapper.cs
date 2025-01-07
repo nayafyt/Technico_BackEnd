@@ -10,12 +10,14 @@ namespace TechnicoApp.Mappers;
 
 public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
 {
+    IMapper<PropertyOwner, PropertyOwnerDto> _mapperPropertyOwner;
     public PropertyRepairDto? GetDto(PropertyRepair propertyRepair)
     {
-        if (propertyRepair == null)
+        if (propertyRepair == null || propertyRepair.PropertyOwner == null)
         {
-            return null;
+                return null;
         }
+
         return new PropertyRepairDto
         {
             DateTime = propertyRepair.DateTime,
@@ -24,21 +26,12 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
             Address = propertyRepair.Address,
             Status = propertyRepair.Status,
             Cost = propertyRepair.Cost,
-            PropertyOwnerDto = new PropertyOwnerDto() { 
-                VatNumber = propertyRepair.PropertyOwner.VatNumber,
-                Name = propertyRepair.PropertyOwner.Name,
-                Surname = propertyRepair.PropertyOwner.Surname,
-                Address = propertyRepair.PropertyOwner.Address,
-                Password = propertyRepair.PropertyOwner.Password,
-                PhoneNumber = propertyRepair.PropertyOwner.PhoneNumber,
-                Email = propertyRepair.PropertyOwner.Email,
-                UserType = propertyRepair.PropertyOwner.UserType
-            }
+            PropertyOwnerDto = _mapperPropertyOwner.GetDto(propertyRepair.PropertyOwner)
         };
     }
     public PropertyRepair? GetModel(PropertyRepairDto propertyRepairDto)
     {
-        if (propertyRepairDto == null)
+        if (propertyRepairDto == null || propertyRepairDto.PropertyOwnerDto == null)
         {
             return null;
         }
@@ -50,17 +43,7 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
             Address = propertyRepairDto.Address,
             Status = propertyRepairDto.Status,
             Cost = propertyRepairDto.Cost,
-            PropertyOwner = new PropertyOwner()
-            {
-                VatNumber = propertyRepairDto.PropertyOwnerDto.VatNumber,
-                Name = propertyRepairDto.PropertyOwnerDto.Name,
-                Surname = propertyRepairDto.PropertyOwnerDto.Surname,
-                PhoneNumber = propertyRepairDto.PropertyOwnerDto.PhoneNumber,
-                Address = propertyRepairDto.PropertyOwnerDto.Address,
-                Email = propertyRepairDto.PropertyOwnerDto.Email,
-                Password = propertyRepairDto.PropertyOwnerDto.Password,
-                UserType = propertyRepairDto.PropertyOwnerDto.UserType
-            }
+            PropertyOwner = _mapperPropertyOwner.GetModel(propertyRepairDto.PropertyOwnerDto)
 
         };
     }

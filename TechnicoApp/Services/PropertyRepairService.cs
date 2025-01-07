@@ -16,20 +16,29 @@ public class PropertyRepairService : IPropertyRepairService
 {
     private readonly IRepository<PropertyRepair, long> _repository;
     private readonly IPropertyRepository<PropertyRepair, long> _propertyRepairRepository;
+    private readonly IPropertyRepairRepository _propertyRepairRepository_forSearch;
 
     private readonly IMapper<PropertyRepair, PropertyRepairDto> _mapper;
 
-    public PropertyRepairService(IRepository<PropertyRepair, long> repository, IPropertyRepository<PropertyRepair,long> propertyRepairService)
+    public PropertyRepairService(IRepository<PropertyRepair, long> repository, IPropertyRepository<PropertyRepair,long> propertyRepairService, IPropertyRepairRepository propertyRepairRepository_forSearch)
     {
         _repository = repository;
         _mapper = new PropertyRepairMapper();
         _propertyRepairRepository = propertyRepairService;
+        _propertyRepairRepository_forSearch = propertyRepairRepository_forSearch;
     }
 
     public async Task<ResponseApi<PropertyRepairDto>> CreateAsync(PropertyRepairDto propertyRepairDto)
     {
 
         var propertyRepair = _mapper.GetModel(propertyRepairDto);
+        if (propertyRepair == null) {
+            return new ResponseApi<PropertyRepairDto>()
+            {
+                StatusCode = 10,
+                Description = "Couldn't convert to model."
+            };
+        }
 
         //propertyRepairDto doesn t have a unique identifier so will see if we use that if  
         if (await _repository.GetAsync(propertyRepair.Id) != null)
@@ -115,18 +124,13 @@ public class PropertyRepairService : IPropertyRepairService
     }
 
 
-    public async Task<ResponseApi<List<PropertyRepairDto>>> SearchByDate(DateTime dateTime)
+    public async Task<ResponseApi<List<PropertyRepairDto>>> SearchByDate(DateOnly date)
     {
         // Fetch all records
-        var repairs = await _repository.GetAsync();
-
-        // Filter records by date
-        var filteredRepairs = repairs
-            .Where(r => r.DateTime.Date == dateTime.Date)
-            .ToList();
+        var repairs = await _propertyRepairRepository_forSearch.GetByDate(date);
 
         // Map results to DTOs
-        var repairDtos = filteredRepairs
+        var repairDtos = repairs
             .Select(r => _mapper.GetDto(r))
             .Where(dto => dto != null) // Filter out nulls
             .Cast<PropertyRepairDto>() // Cast to non-nullable type
@@ -138,14 +142,14 @@ public class PropertyRepairService : IPropertyRepairService
             return new ResponseApi<List<PropertyRepairDto>>
             {
                 StatusCode = 10,
-                Description = "No repairs found for the requested date."
+                Description = "No repairs found for the requested DateTime."
             };
         }
         return new ResponseApi<List<PropertyRepairDto>>
         {
             Value = repairDtos,
             StatusCode = 200,
-            Description = "Collection of repairs for the requested date."
+            Description = "Collection of repairs for the requested DateTime."
         };
 
     }
@@ -178,7 +182,7 @@ public class PropertyRepairService : IPropertyRepairService
             Description = "Collection of repairs for the requested property owner."
         };
     }
-
+ 
 }
 
     

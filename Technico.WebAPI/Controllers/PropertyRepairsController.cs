@@ -65,7 +65,7 @@ namespace Technico.WebAPI.Controllers
         }
 
         [HttpGet("search-by-date")]
-        public async Task<IActionResult> SearchByDate([FromQuery] DateTime date)
+        public async Task<IActionResult> SearchByDate([FromQuery] DateOnly date)
         {
             var response = await _service.SearchByDate(date);
 
