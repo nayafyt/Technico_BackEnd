@@ -22,7 +22,6 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
         // Check if the PropertyOwner already exists
         var existingPropertyOwner = await _context.PropertyOwners
             .FirstOrDefaultAsync(po => po.Id == propertyRepair.PropertyOwner.Id);
-
         if (existingPropertyOwner != null)
         {
             // Attach the existing PropertyOwner to the context

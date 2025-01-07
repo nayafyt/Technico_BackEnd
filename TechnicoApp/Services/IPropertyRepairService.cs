@@ -14,4 +14,5 @@ public interface IPropertyRepairService
     Task<ResponseApi<List<PropertyRepairDto>>> SearchByDate(DateOnly date);
     Task<ResponseApi<bool>> DeletePermanentlyAsync(long id);
     Task<ResponseApi<PropertyRepairDto>> DeactivateAsync(long id);
+
 }
