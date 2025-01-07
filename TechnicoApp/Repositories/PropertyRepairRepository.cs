@@ -19,6 +19,19 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
     }
     public async Task<PropertyRepair?> CreateAsync(PropertyRepair propertyRepair)
     {
+        // Check if the PropertyOwner already exists
+        var existingPropertyOwner = await _context.PropertyOwners
+            .FirstOrDefaultAsync(po => po.Id == propertyRepair.PropertyOwner.Id);
+
+        if (existingPropertyOwner != null)
+        {
+            // Attach the existing PropertyOwner to the context
+            _context.Entry(existingPropertyOwner).State = EntityState.Unchanged;
+
+            // Link the existing PropertyOwner to the PropertyRepair
+            propertyRepair.PropertyOwner = existingPropertyOwner;
+            existingPropertyOwner.PropertyRepairs.Add(propertyRepair);
+        }
         await _context.PropertyRepairs.AddAsync(propertyRepair);
         await _context.SaveChangesAsync();
         return propertyRepair;
@@ -75,6 +88,7 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
     public async Task<List<PropertyRepair>> GetByDate(DateOnly date)
     {
         return await _context.Set<PropertyRepair>()
+               .Include(pr => pr.PropertyOwner)
                .Where(item => DateOnly.FromDateTime(item.DateTime) == date)
                .ToListAsync();
     }

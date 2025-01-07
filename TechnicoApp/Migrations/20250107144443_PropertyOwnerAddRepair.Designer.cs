@@ -12,8 +12,8 @@ using TechnicoApp.Context;
 namespace TechnicoApp.Migrations
 {
     [DbContext(typeof(TechnicoDbContext))]
-    [Migration("20250105164633_Initial")]
-    partial class Initial
+    [Migration("20250107144443_PropertyOwnerAddRepair")]
+    partial class PropertyOwnerAddRepair
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

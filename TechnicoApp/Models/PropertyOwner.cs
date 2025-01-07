@@ -43,13 +43,19 @@ public class PropertyOwner : IEntity<string>
     /// Gets or sets the list of properties owned by the property owner.
     /// A property owner can own multiple properties.
     /// </summary>
-    public List<PropertyItem> PropertyItems { get; set; } = new(); 
+    public List<PropertyItem> PropertyItems { get; set; } = new();
+
+    /// <summary>
+    /// Gets or sets the list of repairs of the property owner.
+    /// A property owner can have multiple repairs.
+    /// </summary>
+    public List<PropertyRepair> PropertyRepairs { get; set; } = new ();
 
     /// <summary>
     /// Gets or sets the list of repairs associated with the property owner's properties.
     /// A property owner can request multiple repairs for their properties.
     /// </summary>
-    public List<PropertyRepair> PropertyRepairs { get; set; } = new();
+    //public List<String> PropertyRepairs { get; set; } = new();
 
     // Soft-delete flag
     public bool IsActive { get; set; } = true; // Default to active

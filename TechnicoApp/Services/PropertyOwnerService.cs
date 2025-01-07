@@ -101,7 +101,7 @@ public class PropertyOwnerService : IPropertyOwnerService
             PropertyOwnerVatNumber = item.PropertyOwnerVatNumber
         }).ToList();
 
-        // Map and include property items in the DTO
+        // Map and include property repairs in the DTO
         propertyOwnerDto.PropertyRepairs = items.Select(item => new PropertyRepairDto
         {
             DateTime = item.DateTime,

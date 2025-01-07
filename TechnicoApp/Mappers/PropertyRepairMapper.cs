@@ -12,7 +12,7 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
 {
     public PropertyRepairDto? GetDto(PropertyRepair propertyRepair)
     {
-        if (propertyRepair == null || propertyRepair.PropertyOwner == null)
+        if (propertyRepair == null )
         {
                 return null;
         }
@@ -25,12 +25,21 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
             Address = propertyRepair.Address,
             Status = propertyRepair.Status,
             Cost = propertyRepair.Cost,
-            PropertyOwnerDto = _mapperPropertyOwner.GetDto(propertyRepair.PropertyOwner)
+            PropertyOwnerDto = new PropertyOwnerDto() { 
+                VatNumber = propertyRepair.PropertyOwner.VatNumber,
+                Name = propertyRepair.PropertyOwner.Name,
+                Surname = propertyRepair.PropertyOwner.Surname,
+                Address = propertyRepair.PropertyOwner.Address,
+                Password = propertyRepair.PropertyOwner.Password,
+                PhoneNumber = propertyRepair.PropertyOwner.PhoneNumber,
+                Email = propertyRepair.PropertyOwner.Email,
+                UserType = propertyRepair.PropertyOwner.UserType
+            }
         };
     }
     public PropertyRepair? GetModel(PropertyRepairDto propertyRepairDto)
     {
-        if (propertyRepairDto == null || propertyRepairDto.PropertyOwnerDto == null)
+        if (propertyRepairDto == null)
         {
             return null;
         }
@@ -42,7 +51,17 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
             Address = propertyRepairDto.Address,
             Status = propertyRepairDto.Status,
             Cost = propertyRepairDto.Cost,
-            PropertyOwner = _mapperPropertyOwner.GetModel(propertyRepairDto.PropertyOwnerDto)
+            PropertyOwner = new PropertyOwner()
+            {
+                VatNumber = propertyRepairDto.PropertyOwnerDto.VatNumber,
+                Name = propertyRepairDto.PropertyOwnerDto.Name,
+                Surname = propertyRepairDto.PropertyOwnerDto.Surname,
+                PhoneNumber = propertyRepairDto.PropertyOwnerDto.PhoneNumber,
+                Address = propertyRepairDto.PropertyOwnerDto.Address,
+                Email = propertyRepairDto.PropertyOwnerDto.Email,
+                Password = propertyRepairDto.PropertyOwnerDto.Password,
+                UserType = propertyRepairDto.PropertyOwnerDto.UserType
+            }
 
         };
     }
