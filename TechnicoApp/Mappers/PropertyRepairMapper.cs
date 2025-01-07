@@ -10,7 +10,6 @@ namespace TechnicoApp.Mappers;
 
 public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
 {
-    IMapper<PropertyOwner, PropertyOwnerDto> _mapperPropertyOwner;
     public PropertyRepairDto? GetDto(PropertyRepair propertyRepair)
     {
         if (propertyRepair == null || propertyRepair.PropertyOwner == null)
