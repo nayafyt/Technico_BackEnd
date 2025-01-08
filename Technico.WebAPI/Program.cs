@@ -45,6 +45,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//DevOps is for the deployment (production screening)
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
