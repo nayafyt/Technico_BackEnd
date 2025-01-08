@@ -15,6 +15,16 @@ public class PropertyItemsController : ControllerBase
     {
         _service = service;
     }
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _service.GetAllAsync();
+        if (result.Value == null)
+        {
+            return NotFound(result);
+        }
+        return Ok(result);
+    }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(long id)

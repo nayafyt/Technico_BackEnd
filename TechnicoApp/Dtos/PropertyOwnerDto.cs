@@ -27,7 +27,7 @@ public class PropertyOwnerDto
     /// Gets or sets the type of user (User or Admin).
     /// </summary>
     public UserType UserType { get; set; }
-    public List<PropertyItemDto> PropertyItems { get; set; } = new ();
-    public List<PropertyRepairDto> PropertyRepairs { get; set; } = new();
+    public List<PropertyItemDto>? PropertyItems { get; set; } 
+    public List<PropertyRepairDto>? PropertyRepairs { get; set; } 
 }
 
