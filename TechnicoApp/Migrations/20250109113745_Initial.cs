@@ -35,8 +35,8 @@ namespace TechnicoApp.Migrations
                 name: "PropertyItems",
                 columns: table => new
                 {
-                    PropertyIdentificationNumber = table.Column<long>(type: "bigint", nullable: false),
-                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PropertyIdentificationNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     YearOfConstruction = table.Column<int>(type: "int", nullable: false),
                     PropertyType = table.Column<int>(type: "int", nullable: false),
@@ -46,7 +46,7 @@ namespace TechnicoApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PropertyItems", x => x.PropertyIdentificationNumber);
+                    table.PrimaryKey("PK_PropertyItems", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PropertyItems_PropertyOwners_PropertyOwnerId",
                         column: x => x.PropertyOwnerId,

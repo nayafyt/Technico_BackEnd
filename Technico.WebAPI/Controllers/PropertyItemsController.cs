@@ -27,7 +27,7 @@ public class PropertyItemsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(long id)
+    public async Task<IActionResult> GetById(string id)
     {
         var result = await _service.GetByIdAsync(id);
         if (result.Value == null)
@@ -49,7 +49,7 @@ public class PropertyItemsController : ControllerBase
     }
 
     [HttpDelete("Permanent/{id}")]
-    public async Task<IActionResult> Delete(long id)
+    public async Task<IActionResult> Delete(string id)
     {
         var result = await _service.DeletePermanentlyAsync(id);
         if (!result.Value)
@@ -60,7 +60,7 @@ public class PropertyItemsController : ControllerBase
     }
 
     [HttpDelete("Deactivate/{id}")]
-    public async Task<IActionResult> SoftDelete(long id)
+    public async Task<IActionResult> SoftDelete(string id)
     {
         var result = await _service.DeactivateAsync(id);
         if (result.Value == null)

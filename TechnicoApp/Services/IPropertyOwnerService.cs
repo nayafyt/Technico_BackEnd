@@ -12,8 +12,9 @@ namespace TechnicoApp.Services;
 /// </summary>
 public interface IPropertyOwnerService
 {
-    Task<ResponseApi<PropertyOwnerDto>> RegisterAsync(PropertyOwnerDto propertyOwnerDto); // Is like Create
-    Task<ResponseApi<PropertyOwnerDto>> GetDetailsAsync(string vatNumber); // Is like Get(K id)
+    Task<ResponseApi<PropertyOwnerDto>> RegisterAsync(PropertyOwnerDto propertyOwnerDto); 
+    Task<ResponseApi<PropertyOwnerDto>> GetDetailsAsync(string vatNumber); 
+    Task<ResponseApi<List<PropertyOwnerDto>>> GetAsync(); 
     Task<ResponseApi<PropertyOwnerDto>> UpdateAsync(string vatNumber, PropertyOwnerDto propertyOwnerDto);
     Task<ResponseApi<bool>> DeleteAsync(string vatNumber);
 }

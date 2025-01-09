@@ -24,11 +24,11 @@ builder.Services.AddScoped<IPropertyItemService, PropertyItemService>();
 builder.Services.AddScoped<IPropertyOwnerService, PropertyOwnerService>();
 builder.Services.AddScoped<IPropertyRepairService, PropertyRepairService>();
 
-builder.Services.AddScoped<IRepository<PropertyItem, long>, PropertyItemRepository>();
+builder.Services.AddScoped<IRepository<PropertyItem, string>, PropertyItemRepository>();
 builder.Services.AddScoped<IRepository<PropertyOwner, string>, PropertyOwnerRepository>();
 builder.Services.AddScoped<IRepository<PropertyRepair, long>, PropertyRepairRepository>();
 
-builder.Services.AddScoped<IPropertyRepository<PropertyItem,long>, PropertyItemRepository>();
+builder.Services.AddScoped<IPropertyRepository<PropertyItem,string>, PropertyItemRepository>();
 builder.Services.AddScoped<IPropertyRepository<PropertyRepair, long>, PropertyRepairRepository>();
 builder.Services.AddScoped<IPropertyRepairRepository, PropertyRepairRepository>();
 

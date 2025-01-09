@@ -10,7 +10,7 @@ using TechnicoApp.Models;
 
 namespace TechnicoApp.Repositories;
 
-public class PropertyItemRepository : IRepository<PropertyItem, long>, IPropertyRepository<PropertyItem, long>
+public class PropertyItemRepository : IRepository<PropertyItem, string>, IPropertyRepository<PropertyItem, string>
 {
     private readonly TechnicoDbContext _context;
 
@@ -22,7 +22,7 @@ public class PropertyItemRepository : IRepository<PropertyItem, long>, IProperty
         return propertyItem;
 
     }
-    public async Task<PropertyItem?> GetAsync(long id)
+    public async Task<PropertyItem?> GetAsync(string id)
     {
         return await _context.PropertyItems.FindAsync(id);
 
@@ -47,7 +47,7 @@ public class PropertyItemRepository : IRepository<PropertyItem, long>, IProperty
         return propertyItem;
     }
 
-    public async Task<bool> DeleteAsync(long id)
+    public async Task<bool> DeleteAsync(string id)
     {
 
         var propertyItem = await _context.PropertyItems.FindAsync(id);
@@ -57,7 +57,7 @@ public class PropertyItemRepository : IRepository<PropertyItem, long>, IProperty
         return true;       
     }
 
-    public async Task<PropertyItem?> DeactivateAsync(long id)
+    public async Task<PropertyItem?> DeactivateAsync(string id)
     {
         var propertyItem = await _context.PropertyItems.FindAsync(id);
         if (propertyItem == null) return default;

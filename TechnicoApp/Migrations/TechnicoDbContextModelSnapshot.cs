@@ -68,18 +68,19 @@ namespace TechnicoApp.Migrations
 
             modelBuilder.Entity("TechnicoApp.Models.PropertyItem", b =>
                 {
-                    b.Property<long>("PropertyIdentificationNumber")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PropertyIdentificationNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PropertyOwnerId")
                         .HasColumnType("nvarchar(450)");
@@ -94,7 +95,7 @@ namespace TechnicoApp.Migrations
                     b.Property<int>("YearOfConstruction")
                         .HasColumnType("int");
 
-                    b.HasKey("PropertyIdentificationNumber");
+                    b.HasKey("Id");
 
                     b.HasIndex("PropertyOwnerId");
 

@@ -19,11 +19,11 @@ namespace TechnicoApp.Services;
 public class PropertyOwnerService : IPropertyOwnerService
 {
     private readonly IRepository<PropertyOwner, string> _repository;
-    private readonly IPropertyRepository<PropertyItem,long> _propertyItemRepository;
+    private readonly IPropertyRepository<PropertyItem, string> _propertyItemRepository;
     private readonly IPropertyRepository<PropertyRepair, long> _propertyRepairRepository;
     private readonly IMapper<PropertyOwner, PropertyOwnerDto> _mapper;
 
-    public PropertyOwnerService(IRepository<PropertyOwner, string> repository,IPropertyRepository<PropertyItem,long> propertyItemRepository, IPropertyRepository<PropertyRepair, long> propertyRepairRepository)
+    public PropertyOwnerService(IRepository<PropertyOwner, string> repository,IPropertyRepository<PropertyItem,string> propertyItemRepository, IPropertyRepository<PropertyRepair, long> propertyRepairRepository)
     {
         _repository = repository;
         _mapper = new PropertyOwnerMapper();
@@ -131,6 +131,8 @@ public class PropertyOwnerService : IPropertyOwnerService
         };
     }
 
+    
+
     public async Task<ResponseApi<PropertyOwnerDto>> UpdateAsync(string vatNumber, PropertyOwnerDto propertyOwnerDto)
     {
         var propertyOwner = await _repository.GetAsync(vatNumber);
@@ -187,6 +189,34 @@ public class PropertyOwnerService : IPropertyOwnerService
             StatusCode = 200,
             Description = "Property owner deleted successfully.",
             Value = true
+        };
+    }
+
+    public async Task<ResponseApi<List<PropertyOwnerDto>>> GetAsync()
+    {
+        
+        var propertyOwner = await _repository.GetAsync();
+
+        if (propertyOwner == null)
+        {
+            return new ResponseApi<List<PropertyOwnerDto>>()
+            {
+                StatusCode = 404,
+                Description = "Not found property owners."
+            };
+        }
+        // Map results to DTOs
+        var propertyOwnerDtos = propertyOwner
+            .Select(r => _mapper.GetDto(r))
+            .Where(dto => dto != null) // Filter out nulls
+            .Cast<PropertyOwnerDto>() // Cast to non-nullable type
+            .ToList();
+
+        return new ResponseApi<List<PropertyOwnerDto>>()
+        {
+            Value = propertyOwnerDtos,
+            StatusCode = 200,
+            Description = "The property owners are shown."
         };
     }
 }

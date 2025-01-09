@@ -11,11 +11,11 @@ namespace TechnicoApp.Services;
 
 public class PropertyItemService: IPropertyItemService
 {
-    private readonly IRepository<PropertyItem, long> _repository;
-    private readonly IPropertyRepository<PropertyItem,long> _propertyItemRepository;   
+    private readonly IRepository<PropertyItem, string> _repository;
+    private readonly IPropertyRepository<PropertyItem,string> _propertyItemRepository;   
     private readonly IMapper<PropertyItem, PropertyItemDto> _mapper;
 
-    public PropertyItemService(IRepository<PropertyItem, long> repository, IPropertyRepository<PropertyItem,long> propertyItemRepository)
+    public PropertyItemService(IRepository<PropertyItem, string> repository, IPropertyRepository<PropertyItem,string> propertyItemRepository)
     {
         _repository = repository;
         _propertyItemRepository = propertyItemRepository;
@@ -24,7 +24,7 @@ public class PropertyItemService: IPropertyItemService
 
 
 
-    public async Task<ResponseApi<PropertyItemDto>> GetByIdAsync(long id)
+    public async Task<ResponseApi<PropertyItemDto>> GetByIdAsync(string id)
     {
         // return await _repository.GetAsync(id);
         var propertyItem = await _repository.GetAsync(id);
@@ -115,7 +115,7 @@ public class PropertyItemService: IPropertyItemService
     //    await _repository.UpdateAsync(propertyItem);
     //}
 
-    public async Task<ResponseApi<bool>> DeletePermanentlyAsync(long id)
+    public async Task<ResponseApi<bool>> DeletePermanentlyAsync(string id)
     {
         var propertyItem = await _repository.GetAsync(id);
 
@@ -139,7 +139,7 @@ public class PropertyItemService: IPropertyItemService
         };
     }
    
-    public async Task<ResponseApi<PropertyItemDto>> DeactivateAsync(long id)
+    public async Task<ResponseApi<PropertyItemDto>> DeactivateAsync(string id)
     {
         //return await _repository.DeactivateAsync(id);
         var propertyItem = await _repository.GetAsync(id);

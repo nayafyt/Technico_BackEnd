@@ -29,19 +29,6 @@ public class TechnicoDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<PropertyItem>(entity =>
-        {
-            // Configure PropertyIdentificationNumber as the primary key
-            entity.HasKey(e => e.PropertyIdentificationNumber);
-
-            // Configure Id as an auto-generated column, not an identity
-            entity.Property(e => e.Id)
-                  .ValueGeneratedNever(); // This prevents Id from using the Identity property
-
-            // Ensure PropertyIdentificationNumber does not use Identity
-            entity.Property(e => e.PropertyIdentificationNumber)
-                  .ValueGeneratedNever();
-        });
         modelBuilder.Entity<PropertyRepair>()
                     .Property(p => p.Cost)
                     .HasColumnType("decimal(18,2)");

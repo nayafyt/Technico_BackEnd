@@ -11,12 +11,12 @@ namespace TechnicoApp.Models;
 /// <summary>
 /// Represents a property item in the system, that is owned by a PropertyOwner.
 /// </summary>
-public class PropertyItem : IEntity<long>
+public class PropertyItem : IEntity<string>
 {
     /// <summary>
     /// Gets or sets the unique id for the property item, which is mapped to the PropertyIdentificationNumber .
     /// </summary>
-    public long Id { 
+    public string Id { 
         get =>PropertyIdentificationNumber; 
         set=>PropertyIdentificationNumber =value; 
     }
@@ -24,7 +24,7 @@ public class PropertyItem : IEntity<long>
     /// <summary>
     /// Gets or sets the PropertyIdenticationNumber of the property item. This serves as the unique identifier.
     /// </summary>
-    public required long PropertyIdentificationNumber { get; set; }
+    public required string PropertyIdentificationNumber { get; set; }
     public string Address { get; set; } = string.Empty;
     public int YearOfConstruction { get; set; }
     public PropertyType PropertyType { get; set; }

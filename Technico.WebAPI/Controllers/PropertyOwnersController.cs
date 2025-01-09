@@ -33,6 +33,17 @@ public class PropertyOwnersController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _service.GetAsync();
+        if (result.Value == null)
+        {
+            return NotFound(result);
+        }
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Register([FromBody] PropertyOwnerDto dto)
     {
