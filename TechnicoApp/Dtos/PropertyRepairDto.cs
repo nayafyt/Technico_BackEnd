@@ -15,5 +15,5 @@ public class PropertyRepairDto
     public string Address { get; set; } = string.Empty;
     public StatusType Status { get; set; } = 0;
     public decimal Cost { get; set; }
-    public required PropertyOwnerDto PropertyOwnerDto { get; set; }
+    public required PropertyItemDto PropertyItemDto { get; set; }
 }

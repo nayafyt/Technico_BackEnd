@@ -41,4 +41,5 @@ public class PropertyItem : IEntity<string>
     /// </summary>
     public bool IsActive { get; set; } = true;
 
+
 }

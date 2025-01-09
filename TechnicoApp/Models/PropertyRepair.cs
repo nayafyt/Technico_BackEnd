@@ -15,6 +15,6 @@ public class PropertyRepair
     public string Address { get; set; } = string.Empty;
     public StatusType Status { get; set; } = 0;
     public decimal Cost { get; set; }
-    public required PropertyOwner PropertyOwner { get; set; }
+    public required PropertyItem PropertyItem { get; set; }
     public bool IsActive { get; set; } = true;
 }

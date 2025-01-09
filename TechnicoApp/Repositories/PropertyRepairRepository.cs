@@ -12,25 +12,24 @@ namespace TechnicoApp.Repositories;
 public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IPropertyRepository<PropertyRepair,long>, IPropertyRepairRepository
 {
     private readonly TechnicoDbContext _context;
+    private readonly IRepository<PropertyItem, string> _propertyRepository;
 
-    public PropertyRepairRepository(TechnicoDbContext context)
+    public PropertyRepairRepository(TechnicoDbContext context, IRepository<PropertyItem, string> propertyRepository)
     {
         _context = context;
+        _propertyRepository = propertyRepository;
     }
+
     public async Task<PropertyRepair?> CreateAsync(PropertyRepair propertyRepair)
     {
-        // Check if the PropertyOwner already exists
-        var existingPropertyOwner = await _context.PropertyOwners
-            .FirstOrDefaultAsync(po => po.Id == propertyRepair.PropertyOwner.Id);
-        if (existingPropertyOwner != null)
-        {
-            // Attach the existing PropertyOwner to the context
-            _context.Entry(existingPropertyOwner).State = EntityState.Unchanged;
+        // Check if the PropertyItem already exists
+        var existingPropertyItem = await _context.PropertyItems
+            .FirstOrDefaultAsync(po => po.PropertyIdentificationNumber == propertyRepair.PropertyItem.PropertyIdentificationNumber);
 
-            // Link the existing PropertyOwner to the PropertyRepair
-            propertyRepair.PropertyOwner = existingPropertyOwner;
-            existingPropertyOwner.PropertyRepairs.Add(propertyRepair);
+        if (existingPropertyItem == null) {
+           await _propertyRepository.CreateAsync(propertyRepair.PropertyItem);
         }
+      
         await _context.PropertyRepairs.AddAsync(propertyRepair);
         await _context.SaveChangesAsync();
         return propertyRepair;
@@ -79,15 +78,14 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
     public async Task<List<PropertyRepair>> GetByOwnerVatNumberAsync(string vatNumber)
     {
         return await _context.Set<PropertyRepair>()
-           .Include(pr => pr.PropertyOwner)
-           .Where(item => item.PropertyOwner != null && item.PropertyOwner.VatNumber.Equals(vatNumber))
+           .Include(pr => pr.PropertyItem)
+           .Where(item => item.PropertyItem != null && item.PropertyItem.PropertyOwnerVatNumber.Equals(vatNumber))
            .ToListAsync();
     }
 
     public async Task<List<PropertyRepair>> GetByDate(DateOnly date)
     {
         return await _context.Set<PropertyRepair>()
-               .Include(pr => pr.PropertyOwner)
                .Where(item => DateOnly.FromDateTime(item.DateTime) == date)
                .ToListAsync();
     }

@@ -66,24 +66,35 @@ namespace TechnicoApp.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PropertyOwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    PropertyItemId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    PropertyOwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PropertyRepairs", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_PropertyRepairs_PropertyItems_PropertyItemId",
+                        column: x => x.PropertyItemId,
+                        principalTable: "PropertyItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_PropertyRepairs_PropertyOwners_PropertyOwnerId",
                         column: x => x.PropertyOwnerId,
                         principalTable: "PropertyOwners",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PropertyItems_PropertyOwnerId",
                 table: "PropertyItems",
                 column: "PropertyOwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyRepairs_PropertyItemId",
+                table: "PropertyRepairs",
+                column: "PropertyItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PropertyRepairs_PropertyOwnerId",
@@ -95,10 +106,10 @@ namespace TechnicoApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PropertyItems");
+                name: "PropertyRepairs");
 
             migrationBuilder.DropTable(
-                name: "PropertyRepairs");
+                name: "PropertyItems");
 
             migrationBuilder.DropTable(
                 name: "PropertyOwners");

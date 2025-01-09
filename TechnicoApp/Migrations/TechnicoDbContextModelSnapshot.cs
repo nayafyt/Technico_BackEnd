@@ -126,8 +126,11 @@ namespace TechnicoApp.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PropertyOwnerId")
+                    b.Property<string>("PropertyItemId")
                         .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PropertyOwnerId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("RepairType")
@@ -137,6 +140,8 @@ namespace TechnicoApp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PropertyItemId");
 
                     b.HasIndex("PropertyOwnerId");
 
@@ -152,13 +157,17 @@ namespace TechnicoApp.Migrations
 
             modelBuilder.Entity("TechnicoApp.Models.PropertyRepair", b =>
                 {
-                    b.HasOne("PropertyOwner", "PropertyOwner")
-                        .WithMany("PropertyRepairs")
-                        .HasForeignKey("PropertyOwnerId")
+                    b.HasOne("TechnicoApp.Models.PropertyItem", "PropertyItem")
+                        .WithMany()
+                        .HasForeignKey("PropertyItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PropertyOwner");
+                    b.HasOne("PropertyOwner", null)
+                        .WithMany("PropertyRepairs")
+                        .HasForeignKey("PropertyOwnerId");
+
+                    b.Navigation("PropertyItem");
                 });
 
             modelBuilder.Entity("PropertyOwner", b =>

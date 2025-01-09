@@ -110,16 +110,13 @@ public class PropertyOwnerService : IPropertyOwnerService
             Address = item.Address,
             Status = item.Status,
             Cost = item.Cost,
-            PropertyOwnerDto = new PropertyOwnerDto()
+            PropertyItemDto = new PropertyItemDto()
             {
-                VatNumber = item.PropertyOwner.VatNumber,
-                Name = item.PropertyOwner.Name,
-                Surname = item.PropertyOwner.Surname,
-                Address = item.PropertyOwner.Address,
-                Password = item.PropertyOwner.Password,
-                PhoneNumber = item.PropertyOwner.PhoneNumber,
-                Email = item.PropertyOwner.Email,
-                UserType = item.PropertyOwner.UserType
+                PropertyIdentificationNumber = item.PropertyItem.PropertyIdentificationNumber,
+                Address = item.Address,
+                YearOfConstruction = item.PropertyItem.YearOfConstruction,
+                PropertyType = item.PropertyItem.PropertyType,
+                PropertyOwnerVatNumber = item.PropertyItem.PropertyOwnerVatNumber
             }
         }).ToList();
 
@@ -211,6 +208,7 @@ public class PropertyOwnerService : IPropertyOwnerService
             .Where(dto => dto != null) // Filter out nulls
             .Cast<PropertyOwnerDto>() // Cast to non-nullable type
             .ToList();
+
 
         return new ResponseApi<List<PropertyOwnerDto>>()
         {
