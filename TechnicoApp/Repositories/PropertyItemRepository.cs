@@ -17,6 +17,14 @@ public class PropertyItemRepository : IRepository<PropertyItem, string>, IProper
 
     public async Task<PropertyItem?> CreateAsync(PropertyItem propertyItem)
     {
+        // Check if the PropertyOwner already exists
+        var existingPropertyOwner = await _context.PropertyOwners
+            .FirstOrDefaultAsync(po => po.VatNumber == propertyItem.PropertyOwnerVatNumber);
+
+        if (existingPropertyOwner == null)
+        {
+            return default;
+        }
         await _context.PropertyItems.AddAsync(propertyItem);
         await _context.SaveChangesAsync();
         return propertyItem;

@@ -98,8 +98,16 @@ public class PropertyItemService: IPropertyItemService
             };
         }
         // Save property owner in repository
-        await _repository.CreateAsync(propertyItem);
+        var createdPropertyItem = await _repository.CreateAsync(propertyItem);
+        if (createdPropertyItem == null)
+        {
+            return new ResponseApi<PropertyItemDto>()
+            {
+                StatusCode = 10,
+                Description = "Property item can't be registered because the owner doesn't exist."
+            };
 
+        }
         // Map the entity to DTO and return
         var resultDto = _mapper.GetDto(propertyItem);
         return new ResponseApi<PropertyItemDto>()

@@ -45,6 +45,10 @@ public class PropertyItemsController : ControllerBase
         {
             return Conflict(result);
         }
+        if (result.StatusCode == 10)
+        {
+            return Conflict(result);
+        }
         return CreatedAtAction(nameof(GetById), new { id = result?.Value?.PropertyIdentificationNumber }, result);
     }
 
