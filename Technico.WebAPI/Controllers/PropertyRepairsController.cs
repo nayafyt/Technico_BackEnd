@@ -40,6 +40,16 @@ namespace Technico.WebAPI.Controllers
             return CreatedAtAction(nameof(SearchByUserVatNumber), new { id = result_model.Id }, result);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(long id, [FromBody] PropertyRepairDto dto)
+        {
+            var result = await _service.UpdateAsync(id, dto);
+            if (result.Value == null)
+            {
+                return NotFound(result);
+            }
+            return Ok(result);
+        }
         // DELETE: api/PropertyRepairs/5
 
         [HttpDelete("Permanent/{id}")]
@@ -94,6 +104,19 @@ namespace Technico.WebAPI.Controllers
 
             return Ok(new { response.Value, response.Description });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _service.GetAllAsync();
+            if (result.Value == null)
+            {
+                return NotFound(result);
+            }
+            return Ok(result);
+        }
+
+
 
     }
 }

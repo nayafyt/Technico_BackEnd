@@ -12,13 +12,15 @@ namespace TechnicoApp.Services;
 public class PropertyItemService: IPropertyItemService
 {
     private readonly IRepository<PropertyItem, string> _repository;
-    private readonly IPropertyRepository<PropertyItem,string> _propertyItemRepository;   
+    private readonly IPropertyRepository<PropertyItem,string> _propertyItemRepository;
+    private readonly IPropertyRepository<PropertyRepair, long> _propertyRepairRepository;
     private readonly IMapper<PropertyItem, PropertyItemDto> _mapper;
 
-    public PropertyItemService(IRepository<PropertyItem, string> repository, IPropertyRepository<PropertyItem,string> propertyItemRepository)
+    public PropertyItemService(IRepository<PropertyItem, string> repository, IPropertyRepository<PropertyItem,string> propertyItemRepository, IPropertyRepository<PropertyRepair, long> propertyRepairRepository)
     {
         _repository = repository;
         _propertyItemRepository = propertyItemRepository;
+        _propertyRepairRepository = propertyRepairRepository;
         _mapper = new PropertyItemMapper();
     }
 
@@ -37,6 +39,9 @@ public class PropertyItemService: IPropertyItemService
                 Description = "Property not found."
             };
         }
+
+        // Fetch associated property repairs
+        //var repairs = await _propertyRepairRepository.GetAsync(vatNumber);
 
         var propertyItemDto = _mapper.GetDto(propertyItem);
 
