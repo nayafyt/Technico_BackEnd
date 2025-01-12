@@ -40,13 +40,21 @@ public class PropertyItemRepository : IRepository<PropertyItem, string>, IProper
         _context = context;
     }
 
-    public async Task<List<PropertyItem>> GetAsync()
+    public async Task<List<PropertyItem>> GetAsync(int pageCount, int pageSize)
     {
+        if (pageCount <= 0 || pageSize <= 0)
+        {
+            throw new ArgumentException("PageCount and PageSize must be greater than 0.");
+        }
+
         return await _context.PropertyItems
-                    .AsNoTracking()
-                    .Where(p => p.IsActive)
-                    .ToListAsync();
+            .AsNoTracking() // Ensures no tracking for optimized read operations
+            .Skip((pageCount - 1) * pageSize) // Calculate the correct starting point
+            .Take(pageSize) // Limit the number of results
+            .ToListAsync();
     }
+
+
 
     public async Task<PropertyItem?> UpdateAsync(PropertyItem propertyItem)
     {
@@ -82,7 +90,7 @@ public class PropertyItemRepository : IRepository<PropertyItem, string>, IProper
             .Where(item => item.PropertyOwnerVatNumber == vatNumber)
             .ToListAsync();
     }
-
+    
 
 }
 

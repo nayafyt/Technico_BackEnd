@@ -6,6 +6,8 @@ using TechnicoApp.Dtos;
 using TechnicoApp.Mappers;
 using TechnicoApp.Models;
 using TechnicoApp.Repositories;
+using TechnicoApp.Dtos;
+
 
 namespace TechnicoApp.Services;
 
@@ -14,12 +16,14 @@ public class PropertyItemService: IPropertyItemService
     private readonly IRepository<PropertyItem, string> _repository;
     private readonly IPropertyRepository<PropertyItem,string> _propertyItemRepository;   
     private readonly IMapper<PropertyItem, PropertyItemDto> _mapper;
+   
 
     public PropertyItemService(IRepository<PropertyItem, string> repository, IPropertyRepository<PropertyItem,string> propertyItemRepository)
     {
         _repository = repository;
         _propertyItemRepository = propertyItemRepository;
         _mapper = new PropertyItemMapper();
+      
     }
 
 
@@ -48,21 +52,22 @@ public class PropertyItemService: IPropertyItemService
         };
     }
 
-    public async Task<ResponseApi<List<PropertyItemDto>>> GetAllAsync()
+    public async Task<ResponseApi<List<PropertyItemDto>>> GetAllAsync(int pageCount , int pageSize)
     {
-        // return await _repository.GetAsync(id);
-        var propertyItem = await _repository.GetAsync();
+        // Retrieve paginated property items
+        var propertyItems = await _repository.GetAsync(pageCount, pageSize);
 
-        if (propertyItem == null)
+        if (propertyItems == null || !propertyItems.Any())
         {
             return new ResponseApi<List<PropertyItemDto>>()
             {
                 StatusCode = 404,
-                Description = "Property not found."
+                Description = "No property items found."
             };
         }
+
         // Map results to DTOs
-        var propertyItemDtos = propertyItem
+        var propertyItemDtos = propertyItems
             .Select(r => _mapper.GetDto(r))
             .Where(dto => dto != null) // Filter out nulls
             .Cast<PropertyItemDto>() // Cast to non-nullable type
@@ -72,9 +77,11 @@ public class PropertyItemService: IPropertyItemService
         {
             Value = propertyItemDtos,
             StatusCode = 200,
-            Description = "The property details are shown."
+            Description = "The property items are shown."
         };
     }
+
+
 
     public async Task<ResponseApi<PropertyItemDto>> CreateAsync(PropertyItemDto propertyItemDto)
     {
@@ -171,5 +178,5 @@ public class PropertyItemService: IPropertyItemService
             Description = "Property deactivated successfully."
         };
     }
-
+    
 }

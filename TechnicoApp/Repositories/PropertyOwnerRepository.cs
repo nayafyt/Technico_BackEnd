@@ -54,6 +54,14 @@ public class PropertyOwnerRepository : IRepository<PropertyOwner, string>
         await _context.SaveChangesAsync();
         return true;
     }
+    public async Task<List<PropertyOwner>> GetAsync(int pageCount, int pageSize)
+    {
+        return await _context.PropertyOwners
+            .Skip((pageCount - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
+
 
 
 }

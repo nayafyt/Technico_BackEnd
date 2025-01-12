@@ -24,6 +24,7 @@ builder.Services.AddScoped<IPropertyItemService, PropertyItemService>();
 builder.Services.AddScoped<IPropertyOwnerService, PropertyOwnerService>();
 builder.Services.AddScoped<IPropertyRepairService, PropertyRepairService>();
 
+
 builder.Services.AddScoped<IRepository<PropertyItem, string>, PropertyItemRepository>();
 builder.Services.AddScoped<IRepository<PropertyOwner, string>, PropertyOwnerRepository>();
 builder.Services.AddScoped<IRepository<PropertyRepair, long>, PropertyRepairRepository>();
@@ -33,6 +34,15 @@ builder.Services.AddScoped<IPropertyRepository<PropertyRepair, long>, PropertyRe
 builder.Services.AddScoped<IPropertyRepairRepository, PropertyRepairRepository>();
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 
 
@@ -51,6 +61,7 @@ if (app.Environment.IsDevelopment())
 //    app.UseSwagger();
 //    app.UseSwaggerUI();
 //}
+app.UseCors("AllowLocalhost");
 
 app.UseHttpsRedirection();
 

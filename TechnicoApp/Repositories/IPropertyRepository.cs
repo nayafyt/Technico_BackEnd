@@ -12,4 +12,6 @@ public interface IPropertyRepository<T,K> where T : class
 {
     Task<T?> DeactivateAsync(K id);
     Task<List<T>> GetByOwnerVatNumberAsync(string vatNumber);
+
+    
 }

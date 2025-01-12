@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TechnicoApp.Domain.Interfaces;
 using TechnicoApp.Dtos;
+using TechnicoApp.Services;
 
 namespace Technico.WebAPI.Controllers;
 
@@ -16,15 +17,24 @@ public class PropertyItemsController : ControllerBase
         _service = service;
     }
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(int pageCount=1, int pageSize=10)
     {
-        var result = await _service.GetAllAsync();
-        if (result.Value == null)
+        // Validate inputs
+        if (pageCount <= 0 || pageSize <= 0)
+        {
+            return BadRequest(new { message = "PageCount and PageSize must be greater than 0." });
+        }
+
+        var result = await _service.GetAllAsync(pageCount, pageSize);
+
+        if (result.Value == null || result.Value.Count == 0)
         {
             return NotFound(result);
         }
+
         return Ok(result);
     }
+
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
@@ -73,4 +83,7 @@ public class PropertyItemsController : ControllerBase
         }
         return NoContent();
     }
+
+    
+
 }

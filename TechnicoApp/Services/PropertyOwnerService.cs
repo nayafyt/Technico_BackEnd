@@ -195,7 +195,7 @@ public class PropertyOwnerService : IPropertyOwnerService
     public async Task<ResponseApi<List<PropertyOwnerDto>>> GetAsync()
     {
         
-        var propertyOwner = await _repository.GetAsync();
+        var propertyOwner = await _repository.GetAsync(1,10);
 
         if (propertyOwner == null)
         {

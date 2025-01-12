@@ -91,4 +91,13 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
                .Where(item => DateOnly.FromDateTime(item.DateTime) == date)
                .ToListAsync();
     }
+
+    public async Task<List<PropertyRepair>> GetAsync(int pageCount, int pageSize)
+    {
+        return await _context.PropertyRepairs
+            .Skip((pageCount - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
+
 }
