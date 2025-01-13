@@ -25,12 +25,16 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
             Address = propertyRepair.Address,
             Status = propertyRepair.Status,
             Cost = propertyRepair.Cost,
-            PropertyItemDto = new PropertyItemDto() { 
-                PropertyIdentificationNumber = propertyRepair.PropertyItem.PropertyIdentificationNumber,
-                Address = propertyRepair.Address,
-                YearOfConstruction = propertyRepair.PropertyItem.YearOfConstruction,
-                PropertyType = propertyRepair.PropertyItem.PropertyType,
-                PropertyOwnerVatNumber = propertyRepair.PropertyItem.PropertyOwnerVatNumber
+            PropertyOwnerDto = new PropertyOwnerDto()
+            {
+                VatNumber = propertyRepair.PropertyOwner.VatNumber,
+                Name = propertyRepair.PropertyOwner.Name,
+                Surname = propertyRepair.PropertyOwner.Surname,
+                Address = propertyRepair.PropertyOwner.Address,
+                Password = propertyRepair.PropertyOwner.Password,
+                PhoneNumber = propertyRepair.PropertyOwner.PhoneNumber,
+                Email = propertyRepair.PropertyOwner.Email,
+                UserType = propertyRepair.PropertyOwner.UserType
             }
         };
     }
