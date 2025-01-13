@@ -52,7 +52,11 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
 
     public async Task<List<PropertyRepair>> GetAsync()
     {
-        return await _context.PropertyRepairs.ToListAsync();
+        // Query with Include to load PropertyOwner
+        return await _context.PropertyRepairs
+            .Include(pr => pr.PropertyOwner) // Load PropertyOwner navigation property
+            .ToListAsync();
+        //return await _context.PropertyRepairs.ToListAsync();
     }
 
     public async Task<PropertyRepair?> UpdateAsync(PropertyRepair propertyRepair)

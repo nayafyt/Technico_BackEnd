@@ -16,7 +16,6 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
         {
                 return null;
         }
-
         return new PropertyRepairDto
         {
             DateTime = propertyRepair.DateTime,
@@ -25,7 +24,7 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
             Address = propertyRepair.Address,
             Status = propertyRepair.Status,
             Cost = propertyRepair.Cost,
-            PropertyOwnerDto = new PropertyOwnerDto()
+            PropertyOwnerDto = propertyRepair.PropertyOwner != null ? new PropertyOwnerDto
             {
                 VatNumber = propertyRepair.PropertyOwner.VatNumber,
                 Name = propertyRepair.PropertyOwner.Name,
@@ -36,6 +35,7 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
                 Email = propertyRepair.PropertyOwner.Email,
                 UserType = propertyRepair.PropertyOwner.UserType
             }
+            : null
         };
     }
     public PropertyRepair? GetModel(PropertyRepairDto propertyRepairDto)

@@ -16,7 +16,7 @@ namespace TechnicoApp.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    VatNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VatNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -29,6 +29,7 @@ namespace TechnicoApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PropertyOwners", x => x.Id);
+                    table.UniqueConstraint("AK_PropertyOwners_VatNumber", x => x.VatNumber);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,18 +67,17 @@ namespace TechnicoApp.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PropertyOwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PropertyOwnerVatNumber = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PropertyRepairs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PropertyRepairs_PropertyOwners_PropertyOwnerId",
-                        column: x => x.PropertyOwnerId,
+                        name: "FK_PropertyRepairs_PropertyOwners_PropertyOwnerVatNumber",
+                        column: x => x.PropertyOwnerVatNumber,
                         principalTable: "PropertyOwners",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "VatNumber");
                 });
 
             migrationBuilder.CreateIndex(
@@ -86,9 +86,9 @@ namespace TechnicoApp.Migrations
                 column: "PropertyOwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PropertyRepairs_PropertyOwnerId",
+                name: "IX_PropertyRepairs_PropertyOwnerVatNumber",
                 table: "PropertyRepairs",
-                column: "PropertyOwnerId");
+                column: "PropertyOwnerVatNumber");
         }
 
         /// <inheritdoc />

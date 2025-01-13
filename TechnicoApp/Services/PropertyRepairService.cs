@@ -26,6 +26,7 @@ public class PropertyRepairService : IPropertyRepairService
         _mapper = new PropertyRepairMapper();
         _propertyRepairRepository = propertyRepairService;
         _propertyRepairRepository_forSearch = propertyRepairRepository_forSearch;
+        
     }
 
     public async Task<ResponseApi<PropertyRepairDto>> CreateAsync(PropertyRepairDto propertyRepairDto)
@@ -69,7 +70,7 @@ public class PropertyRepairService : IPropertyRepairService
         {
             Value = resultDto,
             StatusCode = 200,
-            Description = "Property successfully registered."
+            Description = "Repair successfully registered."
         };
     }
 
@@ -166,6 +167,8 @@ public class PropertyRepairService : IPropertyRepairService
             .Cast<PropertyRepairDto>() // Cast to non-nullable type
             .ToList();
 
+
+   
 
         if (repairDtos.Count == 0)
         {

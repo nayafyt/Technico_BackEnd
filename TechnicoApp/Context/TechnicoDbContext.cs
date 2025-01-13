@@ -32,6 +32,13 @@ public class TechnicoDbContext : DbContext
         modelBuilder.Entity<PropertyRepair>()
                     .Property(p => p.Cost)
                     .HasColumnType("decimal(18,2)");
+
+
+        modelBuilder.Entity<PropertyRepair>()
+        .HasOne(pr => pr.PropertyOwner)
+        .WithMany(po => po.PropertyRepairs)
+        .HasForeignKey("PropertyOwnerVatNumber") // Database column for the foreign key
+        .HasPrincipalKey(po => po.VatNumber);
     }
 
 

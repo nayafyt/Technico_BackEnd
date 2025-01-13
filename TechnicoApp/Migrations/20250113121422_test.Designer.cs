@@ -12,7 +12,7 @@ using TechnicoApp.Context;
 namespace TechnicoApp.Migrations
 {
     [DbContext(typeof(TechnicoDbContext))]
-    [Migration("20250113100155_test")]
+    [Migration("20250113121422_test")]
     partial class test
     {
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace TechnicoApp.Migrations
 
                     b.Property<string>("VatNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -129,8 +129,7 @@ namespace TechnicoApp.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PropertyOwnerId")
-                        .IsRequired()
+                    b.Property<string>("PropertyOwnerVatNumber")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("RepairType")
@@ -141,7 +140,7 @@ namespace TechnicoApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PropertyOwnerId");
+                    b.HasIndex("PropertyOwnerVatNumber");
 
                     b.ToTable("PropertyRepairs");
                 });
@@ -157,9 +156,8 @@ namespace TechnicoApp.Migrations
                 {
                     b.HasOne("PropertyOwner", "PropertyOwner")
                         .WithMany("PropertyRepairs")
-                        .HasForeignKey("PropertyOwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PropertyOwnerVatNumber")
+                        .HasPrincipalKey("VatNumber");
 
                     b.Navigation("PropertyOwner");
                 });
