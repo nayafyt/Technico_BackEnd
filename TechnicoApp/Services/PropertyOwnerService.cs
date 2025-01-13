@@ -110,13 +110,16 @@ public class PropertyOwnerService : IPropertyOwnerService
             Address = item.Address,
             Status = item.Status,
             Cost = item.Cost,
-            PropertyItemDto = new PropertyItemDto()
+            PropertyOwnerDto = new PropertyOwnerDto()
             {
-                PropertyIdentificationNumber = item.PropertyItem.PropertyIdentificationNumber,
-                Address = item.Address,
-                YearOfConstruction = item.PropertyItem.YearOfConstruction,
-                PropertyType = item.PropertyItem.PropertyType,
-                PropertyOwnerVatNumber = item.PropertyItem.PropertyOwnerVatNumber
+                VatNumber = item.PropertyOwner.VatNumber,
+                Name = item.PropertyOwner.Name,
+                Surname = item.PropertyOwner.Surname,
+                Address = item.PropertyOwner.Address,
+                Password = item.PropertyOwner.Password,
+                PhoneNumber = item.PropertyOwner.PhoneNumber,
+                Email = item.PropertyOwner.Email,
+                UserType = item.PropertyOwner.UserType
             }
         }).ToList();
 

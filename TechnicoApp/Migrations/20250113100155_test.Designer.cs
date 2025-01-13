@@ -12,8 +12,8 @@ using TechnicoApp.Context;
 namespace TechnicoApp.Migrations
 {
     [DbContext(typeof(TechnicoDbContext))]
-    [Migration("20250110131830_initial")]
-    partial class initial
+    [Migration("20250113100155_test")]
+    partial class test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,11 +129,8 @@ namespace TechnicoApp.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PropertyItemId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("PropertyOwnerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("RepairType")
@@ -143,8 +140,6 @@ namespace TechnicoApp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PropertyItemId");
 
                     b.HasIndex("PropertyOwnerId");
 
@@ -160,17 +155,13 @@ namespace TechnicoApp.Migrations
 
             modelBuilder.Entity("TechnicoApp.Models.PropertyRepair", b =>
                 {
-                    b.HasOne("TechnicoApp.Models.PropertyItem", "PropertyItem")
-                        .WithMany()
-                        .HasForeignKey("PropertyItemId")
+                    b.HasOne("PropertyOwner", "PropertyOwner")
+                        .WithMany("PropertyRepairs")
+                        .HasForeignKey("PropertyOwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PropertyOwner", null)
-                        .WithMany("PropertyRepairs")
-                        .HasForeignKey("PropertyOwnerId");
-
-                    b.Navigation("PropertyItem");
+                    b.Navigation("PropertyOwner");
                 });
 
             modelBuilder.Entity("PropertyOwner", b =>
