@@ -52,14 +52,16 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
             Address = propertyRepairDto.Address,
             Status = propertyRepairDto.Status,
             Cost = propertyRepairDto.Cost,
-            PropertyItem = new PropertyItem()
+            PropertyOwner = new PropertyOwner()
             {
-                PropertyIdentificationNumber = propertyRepairDto.PropertyItemDto.PropertyIdentificationNumber,
-                Address = propertyRepairDto.PropertyItemDto.Address,
-                YearOfConstruction = propertyRepairDto.PropertyItemDto.YearOfConstruction,
-                PropertyType = propertyRepairDto.PropertyItemDto.PropertyType,
-                PropertyOwnerVatNumber = propertyRepairDto.PropertyItemDto.PropertyOwnerVatNumber
-
+                VatNumber = propertyRepairDto.PropertyOwnerDto.VatNumber,
+                Name = propertyRepairDto.PropertyOwnerDto.Name,
+                Surname = propertyRepairDto.PropertyOwnerDto.Surname,
+                Address = propertyRepairDto.PropertyOwnerDto.Address,
+                Password = propertyRepairDto.PropertyOwnerDto.Password,
+                PhoneNumber = propertyRepairDto.PropertyOwnerDto.PhoneNumber,
+                Email = propertyRepairDto.PropertyOwnerDto.Email,
+                UserType = propertyRepairDto.PropertyOwnerDto.UserType
             }
 
         };
