@@ -209,6 +209,11 @@ public class PropertyOwnerService : IPropertyOwnerService
             .Cast<PropertyOwnerDto>() // Cast to non-nullable type
             .ToList();
 
+        var propertyOwner_Items = propertyOwner
+            .Select(po => _propertyItemRepository.GetByOwnerVatNumberAsync(po.VatNumber))
+            .ToList();
+
+
 
         return new ResponseApi<List<PropertyOwnerDto>>()
         {
