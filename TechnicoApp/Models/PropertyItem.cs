@@ -35,6 +35,7 @@ public class PropertyItem : IEntity<string>
     /// </summary>
     public required string PropertyOwnerVatNumber { get; set; }
 
+    public List<PropertyRepair> PropertyRepairs { get; set; } = new List<PropertyRepair>();
     /// <summary>
     /// Gets or sets a value indicating whether the property item is active. 
     /// Used as a soft-delete flag, defaulting to true (active).
