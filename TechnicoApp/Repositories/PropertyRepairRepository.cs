@@ -48,7 +48,7 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
     public async Task<List<PropertyRepair>> GetAsync()
     {
         return await _context.PropertyRepairs
-            .Include(pr=> pr.PropertyItem.PropertyOwnerVatNumber)
+            .Include(pr => pr.PropertyItem.PropertyIdentificationNumber)
             .ToListAsync();
     }
 
@@ -93,5 +93,12 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
         return await _context.Set<PropertyRepair>()
                .Where(item => DateOnly.FromDateTime(item.DateTime) == date)
                .ToListAsync();
+    }
+
+    public async Task<PropertyRepair?> GetAsync(string vatNumber, DateTime date)
+    {
+        return await _context.PropertyRepairs
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(p => p.DateTime == date && p.PropertyItem.PropertyOwnerVatNumber == vatNumber);
     }
 }

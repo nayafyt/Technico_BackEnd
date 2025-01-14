@@ -37,7 +37,7 @@ public class TechnicoDbContext : DbContext
         .HasOne(pr => pr.PropertyItem)
         .WithMany(po => po.PropertyRepairs)
         .HasForeignKey("PropertyOwnerVatNumber") // Database column for the foreign key
-        .HasPrincipalKey(po => po.PropertyOwnerVatNumber);
+        .HasPrincipalKey(po => po.PropertyIdentificationNumber);
     }
 
 

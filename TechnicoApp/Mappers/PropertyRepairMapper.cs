@@ -17,6 +17,7 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
                 return null;
         }
 
+
         return new PropertyRepairDto
         {
             DateTime = propertyRepair.DateTime,
@@ -25,13 +26,14 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
             Address = propertyRepair.Address,
             Status = propertyRepair.Status,
             Cost = propertyRepair.Cost,
-            PropertyItemDto = new PropertyItemDto() { 
+            PropertyItemDto = propertyRepair.PropertyItem != null ? new PropertyItemDto()
+            {
                 PropertyIdentificationNumber = propertyRepair.PropertyItem.PropertyIdentificationNumber,
                 Address = propertyRepair.Address,
                 YearOfConstruction = propertyRepair.PropertyItem.YearOfConstruction,
                 PropertyType = propertyRepair.PropertyItem.PropertyType,
                 PropertyOwnerVatNumber = propertyRepair.PropertyItem.PropertyOwnerVatNumber
-            }
+            } : null
         };
     }
     public PropertyRepair? GetModel(PropertyRepairDto propertyRepairDto)

@@ -36,18 +36,18 @@ namespace TechnicoApp.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PropertyIdentificationNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PropertyIdentificationNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     YearOfConstruction = table.Column<int>(type: "int", nullable: false),
                     PropertyType = table.Column<int>(type: "int", nullable: false),
-                    PropertyOwnerVatNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PropertyOwnerVatNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     PropertyOwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PropertyItems", x => x.Id);
-                    table.UniqueConstraint("AK_PropertyItems_PropertyOwnerVatNumber", x => x.PropertyOwnerVatNumber);
+                    table.UniqueConstraint("AK_PropertyItems_PropertyIdentificationNumber", x => x.PropertyIdentificationNumber);
                     table.ForeignKey(
                         name: "FK_PropertyItems_PropertyOwners_PropertyOwnerId",
                         column: x => x.PropertyOwnerId,
@@ -78,7 +78,7 @@ namespace TechnicoApp.Migrations
                         name: "FK_PropertyRepairs_PropertyItems_PropertyOwnerVatNumber",
                         column: x => x.PropertyOwnerVatNumber,
                         principalTable: "PropertyItems",
-                        principalColumn: "PropertyOwnerVatNumber");
+                        principalColumn: "PropertyIdentificationNumber");
                     table.ForeignKey(
                         name: "FK_PropertyRepairs_PropertyOwners_PropertyOwnerId",
                         column: x => x.PropertyOwnerId,

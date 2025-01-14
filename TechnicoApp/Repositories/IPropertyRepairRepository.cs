@@ -10,5 +10,6 @@ namespace TechnicoApp.Repositories;
 public interface IPropertyRepairRepository
 {
     Task<List<PropertyRepair>> GetByDate (DateOnly date);
+   Task<PropertyRepair?> GetAsync (string vatNumber,DateTime date);
     
 }

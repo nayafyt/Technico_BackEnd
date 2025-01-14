@@ -80,14 +80,14 @@ namespace TechnicoApp.Migrations
 
                     b.Property<string>("PropertyIdentificationNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PropertyOwnerId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PropertyOwnerVatNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PropertyType")
                         .HasColumnType("int");
@@ -163,7 +163,7 @@ namespace TechnicoApp.Migrations
                     b.HasOne("TechnicoApp.Models.PropertyItem", "PropertyItem")
                         .WithMany("PropertyRepairs")
                         .HasForeignKey("PropertyOwnerVatNumber")
-                        .HasPrincipalKey("PropertyOwnerVatNumber");
+                        .HasPrincipalKey("PropertyIdentificationNumber");
 
                     b.Navigation("PropertyItem");
                 });
