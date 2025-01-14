@@ -41,14 +41,15 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
     public async Task<PropertyRepair?> GetAsync(long id)
     {
         return await _context.PropertyRepairs
-        .AsNoTracking()
-        .FirstOrDefaultAsync(p => p.Id == id);
+            .Include(pr => pr.PropertyItem.PropertyIdentificationNumber)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<List<PropertyRepair>> GetAsync()
     {
         return await _context.PropertyRepairs
-            .Include(pr => pr.PropertyItem.PropertyIdentificationNumber)
+            .Include(pr => pr.PropertyItem)
             .ToListAsync();
     }
 
