@@ -211,9 +211,9 @@ public class PropertyRepairService : IPropertyRepairService
         };
     }
 
-    public async Task<ResponseApi<PropertyRepairDto>> UpdateAsync(string vatNumber, DateTime date, PropertyRepairDto propertyRepairDto)
+    public async Task<ResponseApi<PropertyRepairDto>> UpdateAsync(long id, PropertyRepairDto propertyRepairDto)
     {
-        var propertyRepair = await _propertyRepairRepository_forSearch.GetAsync(vatNumber, date);
+        var propertyRepair = await _repository.GetAsync(id);
 
         if (propertyRepair == null)
         {

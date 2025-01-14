@@ -106,10 +106,10 @@ namespace Technico.WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{vatNumber}/{date}")]
-        public async Task<IActionResult> Update(string vatNumber, DateTime date, [FromBody] PropertyRepairDto dto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(long id, [FromBody] PropertyRepairDto dto)
         {
-            var result = await _service.UpdateAsync(vatNumber, date, dto);
+            var result = await _service.UpdateAsync(id, dto);
             if (result.Value == null)
             {
                 return NotFound(result);
