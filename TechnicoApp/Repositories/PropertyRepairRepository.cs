@@ -22,14 +22,17 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
 
     public async Task<PropertyRepair?> CreateAsync(PropertyRepair propertyRepair)
     {
-        // Check if the PropertyItem already exists
+        //Check if the PropertyOwner already exists
         var existingPropertyItem = await _context.PropertyItems
-            .FirstOrDefaultAsync(po => po.PropertyIdentificationNumber == propertyRepair.PropertyItem.PropertyIdentificationNumber);
+            .FirstOrDefaultAsync(pi => pi.PropertyIdentificationNumber == propertyRepair.PropertyItem.PropertyIdentificationNumber);
+        if (existingPropertyItem != null)
+        {
+            // Attach the existing PropertyOwner to the context
+            _context.Entry(existingPropertyItem).State = EntityState.Unchanged;
 
-        if (existingPropertyItem == null) {
-           await _propertyRepository.CreateAsync(propertyRepair.PropertyItem);
+            // Link the existing PropertyOwner to the PropertyRepair
+            propertyRepair.PropertyItem = existingPropertyItem;
         }
-      
         await _context.PropertyRepairs.AddAsync(propertyRepair);
         await _context.SaveChangesAsync();
         return propertyRepair;
