@@ -17,16 +17,15 @@ public class PropertyRepairService : IPropertyRepairService
     private readonly IRepository<PropertyRepair, long> _repository;
     private readonly IPropertyRepository<PropertyRepair, long> _propertyRepairRepository;
     private readonly IPropertyRepairRepository _propertyRepairRepository_forSearch;
+ 
 
     private readonly IMapper<PropertyRepair, PropertyRepairDto> _mapper;
 
-    public PropertyRepairService(IRepository<PropertyRepair, long> repository, IPropertyRepository<PropertyRepair,long> propertyRepairService, IPropertyRepairRepository propertyRepairRepository_forSearch)
-    {
+    public PropertyRepairService(IRepository<PropertyRepair, long> repository, IPropertyRepository<PropertyRepair,long> propertyRepairRepository, IPropertyRepairRepository propertyRepairRepository_forSearch) { 
         _repository = repository;
         _mapper = new PropertyRepairMapper();
-        _propertyRepairRepository = propertyRepairService;
+        _propertyRepairRepository = propertyRepairRepository;
         _propertyRepairRepository_forSearch = propertyRepairRepository_forSearch;
-        
     }
 
     public async Task<ResponseApi<PropertyRepairDto>> CreateAsync(PropertyRepairDto propertyRepairDto)
@@ -186,9 +185,9 @@ public class PropertyRepairService : IPropertyRepairService
         };
     }
 
-    public async Task<ResponseApi<PropertyRepairDto>> UpdateAsync(long id,PropertyRepairDto propertyRepairDto)
+    public async Task<ResponseApi<PropertyRepairDto>> UpdateAsync(string vatNumber, DateTime date,PropertyRepairDto propertyRepairDto)
     {
-        var propertyRepair = await _repository.GetAsync(id);
+        var propertyRepair = await _propertyRepairRepository_forSearch.GetAsync(vatNumber, date);
 
         if (propertyRepair == null)
         {
@@ -208,6 +207,7 @@ public class PropertyRepairService : IPropertyRepairService
                 Description = "Property repair (Dto) not parsed into Model."
             };
         }
+        propertyRepairUpdated.Id = propertyRepair.Id;
         // Save changes in the repository
         await _repository.UpdateAsync(propertyRepairUpdated);
 

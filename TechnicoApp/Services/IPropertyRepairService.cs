@@ -13,7 +13,7 @@ public interface IPropertyRepairService
     Task<ResponseApi<List<PropertyRepairDto>>> SearchByUserVATNumber(string VATNumber);
     Task<ResponseApi<List<PropertyRepairDto>>> SearchByDate(DateOnly date);
     Task<ResponseApi<List<PropertyRepairDto>>> GetAllAsync();
-    Task<ResponseApi<PropertyRepairDto>> UpdateAsync(long id, PropertyRepairDto propertyRepairDto);
+    Task<ResponseApi<PropertyRepairDto>> UpdateAsync(string vatNumber, DateTime date, PropertyRepairDto propertyRepairDto);
     Task<ResponseApi<bool>> DeletePermanentlyAsync(long id);
     Task<ResponseApi<PropertyRepairDto>> DeactivateAsync(long id);
 

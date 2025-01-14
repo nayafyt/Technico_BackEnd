@@ -64,6 +64,7 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
         _context.PropertyRepairs.Update(propertyRepair);
         await _context.SaveChangesAsync();
         return propertyRepair;
+
     }
 
     public async Task<bool> DeleteAsync(long id)
@@ -102,4 +103,12 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
                .Where(item => DateOnly.FromDateTime(item.DateTime) == date)
                .ToListAsync();
     }
+
+    public async Task<PropertyRepair?> GetAsync(string vatNumber, DateTime date)
+    {
+        return await _context.PropertyRepairs
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(p => p.DateTime == date && p.PropertyOwner.VatNumber == vatNumber);
+    
+}
 }
