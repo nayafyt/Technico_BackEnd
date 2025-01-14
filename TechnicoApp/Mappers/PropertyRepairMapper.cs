@@ -20,6 +20,7 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
 
         return new PropertyRepairDto
         {
+            Id = propertyRepair.Id,
             DateTime = propertyRepair.DateTime,
             RepairType = propertyRepair.RepairType,
             Description = propertyRepair.Description,
@@ -44,6 +45,7 @@ public class PropertyRepairMapper: IMapper<PropertyRepair, PropertyRepairDto>
         }
         return new PropertyRepair
         {
+            Id = propertyRepairDto.Id,
             DateTime = propertyRepairDto.DateTime,
             RepairType = propertyRepairDto.RepairType,
             Description = propertyRepairDto.Description,

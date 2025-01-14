@@ -9,6 +9,7 @@ namespace TechnicoApp.Dtos;
 
 public class PropertyRepairDto
 {
+    public long Id { get; set; }
     public DateTime DateTime { get; set; }
     public RepairType RepairType { get; set; }
     public string? Description { get; set; }
