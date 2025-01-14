@@ -87,7 +87,7 @@ namespace TechnicoApp.Migrations
 
                     b.Property<string>("PropertyOwnerVatNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("PropertyType")
                         .HasColumnType("int");
@@ -126,11 +126,10 @@ namespace TechnicoApp.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PropertyItemId")
-                        .IsRequired()
+                    b.Property<string>("PropertyOwnerId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("PropertyOwnerId")
+                    b.Property<string>("PropertyOwnerVatNumber")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("RepairType")
@@ -141,9 +140,9 @@ namespace TechnicoApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PropertyItemId");
-
                     b.HasIndex("PropertyOwnerId");
+
+                    b.HasIndex("PropertyOwnerVatNumber");
 
                     b.ToTable("PropertyRepairs");
                 });
@@ -157,15 +156,14 @@ namespace TechnicoApp.Migrations
 
             modelBuilder.Entity("TechnicoApp.Models.PropertyRepair", b =>
                 {
-                    b.HasOne("TechnicoApp.Models.PropertyItem", "PropertyItem")
-                        .WithMany()
-                        .HasForeignKey("PropertyItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PropertyOwner", null)
                         .WithMany("PropertyRepairs")
                         .HasForeignKey("PropertyOwnerId");
+
+                    b.HasOne("TechnicoApp.Models.PropertyItem", "PropertyItem")
+                        .WithMany("PropertyRepairs")
+                        .HasForeignKey("PropertyOwnerVatNumber")
+                        .HasPrincipalKey("PropertyOwnerVatNumber");
 
                     b.Navigation("PropertyItem");
                 });
@@ -174,6 +172,11 @@ namespace TechnicoApp.Migrations
                 {
                     b.Navigation("PropertyItems");
 
+                    b.Navigation("PropertyRepairs");
+                });
+
+            modelBuilder.Entity("TechnicoApp.Models.PropertyItem", b =>
+                {
                     b.Navigation("PropertyRepairs");
                 });
 #pragma warning restore 612, 618

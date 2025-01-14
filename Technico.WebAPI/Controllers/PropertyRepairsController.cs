@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -93,6 +94,16 @@ namespace Technico.WebAPI.Controllers
             }
 
             return Ok(new { response.Value, response.Description });
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _service.GetAllAsync();
+            if (result.Value == null)
+            {
+                return NotFound(result);
+            }
+            return Ok(result);
         }
 
     }

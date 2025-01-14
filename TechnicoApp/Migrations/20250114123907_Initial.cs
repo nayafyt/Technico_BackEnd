@@ -40,13 +40,14 @@ namespace TechnicoApp.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     YearOfConstruction = table.Column<int>(type: "int", nullable: false),
                     PropertyType = table.Column<int>(type: "int", nullable: false),
-                    PropertyOwnerVatNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PropertyOwnerVatNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     PropertyOwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PropertyItems", x => x.Id);
+                    table.UniqueConstraint("AK_PropertyItems_PropertyOwnerVatNumber", x => x.PropertyOwnerVatNumber);
                     table.ForeignKey(
                         name: "FK_PropertyItems_PropertyOwners_PropertyOwnerId",
                         column: x => x.PropertyOwnerId,
@@ -66,7 +67,7 @@ namespace TechnicoApp.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PropertyItemId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PropertyOwnerVatNumber = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     PropertyOwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -74,11 +75,10 @@ namespace TechnicoApp.Migrations
                 {
                     table.PrimaryKey("PK_PropertyRepairs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PropertyRepairs_PropertyItems_PropertyItemId",
-                        column: x => x.PropertyItemId,
+                        name: "FK_PropertyRepairs_PropertyItems_PropertyOwnerVatNumber",
+                        column: x => x.PropertyOwnerVatNumber,
                         principalTable: "PropertyItems",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PropertyOwnerVatNumber");
                     table.ForeignKey(
                         name: "FK_PropertyRepairs_PropertyOwners_PropertyOwnerId",
                         column: x => x.PropertyOwnerId,
@@ -92,14 +92,14 @@ namespace TechnicoApp.Migrations
                 column: "PropertyOwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PropertyRepairs_PropertyItemId",
-                table: "PropertyRepairs",
-                column: "PropertyItemId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PropertyRepairs_PropertyOwnerId",
                 table: "PropertyRepairs",
                 column: "PropertyOwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyRepairs_PropertyOwnerVatNumber",
+                table: "PropertyRepairs",
+                column: "PropertyOwnerVatNumber");
         }
 
         /// <inheritdoc />

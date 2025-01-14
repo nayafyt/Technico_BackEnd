@@ -32,9 +32,15 @@ builder.Services.AddScoped<IPropertyRepository<PropertyItem,string>, PropertyIte
 builder.Services.AddScoped<IPropertyRepository<PropertyRepair, long>, PropertyRepairRepository>();
 builder.Services.AddScoped<IPropertyRepairRepository, PropertyRepairRepository>();
 
-
-
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -45,13 +51,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//DevOps is for the deployment (production screening)
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
 
+
+app.UseCors("AllowLocalhost");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

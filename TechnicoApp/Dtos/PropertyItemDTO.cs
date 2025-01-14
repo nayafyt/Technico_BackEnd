@@ -9,4 +9,6 @@ public class PropertyItemDto
     public int YearOfConstruction { get; set; }
     public PropertyType PropertyType { get; set; }
     public required string PropertyOwnerVatNumber { get; set; }  
+
+    public List<PropertyRepairDto>? PropertyRepairDtos { get; set; }
 }

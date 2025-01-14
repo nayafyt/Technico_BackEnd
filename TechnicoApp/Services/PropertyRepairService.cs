@@ -35,7 +35,7 @@ public class PropertyRepairService : IPropertyRepairService
         if (propertyRepair == null) {
             return new ResponseApi<PropertyRepairDto>()
             {
-                StatusCode = 10,
+                StatusCode = 500,
                 Description = "Couldn't convert to model."
             };
         }
@@ -56,7 +56,7 @@ public class PropertyRepairService : IPropertyRepairService
         {
             return new ResponseApi<PropertyRepairDto>()
             {
-                StatusCode = 10,
+                StatusCode = 500,
                 Description = "Property repair can't convert to model."
             };
         }
@@ -182,7 +182,35 @@ public class PropertyRepairService : IPropertyRepairService
             Description = "Collection of repairs for the requested property owner."
         };
     }
- 
+
+    public async Task<ResponseApi<List<PropertyRepairDto>>> GetAllAsync()
+    {
+        var propertyRepair = await _repository.GetAsync();
+
+        if (propertyRepair == null)
+        {
+            return new ResponseApi<List<PropertyRepairDto>>()
+            {
+                StatusCode = 404,
+                Description = "Not found property repairs."
+            };
+        }
+        // Map results to DTOs
+        var propertyRepairDtos = propertyRepair
+            .Select(r => _mapper.GetDto(r))
+            .Where(dto => dto != null) // Filter out nulls
+            .Cast<PropertyRepairDto>() // Cast to non-nullable type
+            .ToList();
+
+
+        return new ResponseApi<List<PropertyRepairDto>>()
+        {
+            Value = propertyRepairDtos,
+            StatusCode = 200,
+            Description = "The property repairs are shown."
+        };
+    }
+
 }
 
     
