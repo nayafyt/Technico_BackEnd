@@ -8,5 +8,5 @@ namespace TechnicoApp.Models;
 
 public enum StatusType
 {
-    Pending, InProgress, Complete
+    Pending, InProgress, Complete, Declined
 }
