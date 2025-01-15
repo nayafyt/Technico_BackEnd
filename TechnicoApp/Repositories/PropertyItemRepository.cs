@@ -83,6 +83,14 @@ public class PropertyItemRepository : IRepository<PropertyItem, string>, IProper
             .ToListAsync();
     }
 
-
+    public async Task<List<PropertyItem>> GetAsync(int pageCount, int pageSize)
+    {
+        return await _context.PropertyItems
+                    .AsNoTracking()
+                    .Skip((pageCount-1)*pageSize)
+                    .Take(pageSize)
+                    .Where(p => p.IsActive)
+                    .ToListAsync();
+    }
 }
 

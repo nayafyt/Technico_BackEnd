@@ -14,7 +14,9 @@ public interface IPropertyOwnerService
 {
     Task<ResponseApi<PropertyOwnerDto>> RegisterAsync(PropertyOwnerDto propertyOwnerDto); 
     Task<ResponseApi<PropertyOwnerDto>> GetDetailsAsync(string vatNumber); 
-    Task<ResponseApi<List<PropertyOwnerDto>>> GetAsync(); 
+    Task<ResponseApi<List<PropertyOwnerDto>>> GetAsync();
+    Task<ResponseApi<List<PropertyOwnerDto>>> GetAsync(int pageCount, int pageSize);
+
     Task<ResponseApi<PropertyOwnerDto>> UpdateAsync(string vatNumber, PropertyOwnerDto propertyOwnerDto);
     Task<ResponseApi<bool>> DeleteAsync(string vatNumber);
 }

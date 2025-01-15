@@ -247,8 +247,35 @@ public class PropertyRepairService : IPropertyRepairService
         };
     }
 
+    public async Task<ResponseApi<List<PropertyRepairDto>>> GetAsync(int pageCount, int pageSize)
+    {
+        var propertyRepair = await _repository.GetAsync(pageCount,pageSize);
+
+        if (propertyRepair == null)
+        {
+            return new ResponseApi<List<PropertyRepairDto>>()
+            {
+                StatusCode = 404,
+                Description = "Not found property repairs."
+            };
+        }
+        // Map results to DTOs
+        var propertyRepairDtos = propertyRepair
+            .Select(r => _mapper.GetDto(r))
+            .Where(dto => dto != null) // Filter out nulls
+            .Cast<PropertyRepairDto>() // Cast to non-nullable type
+            .ToList();
+
+
+        return new ResponseApi<List<PropertyRepairDto>>()
+        {
+            Value = propertyRepairDtos,
+            StatusCode = 200,
+            Description = "The property repairs are shown."
+        };
+    }
+
 }
 
-    
 
-  
+

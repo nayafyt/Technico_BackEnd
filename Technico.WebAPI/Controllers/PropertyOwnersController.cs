@@ -43,6 +43,16 @@ public class PropertyOwnersController : ControllerBase
         }
         return Ok(result);
     }
+    [HttpGet("ByPage")]
+    public async Task<IActionResult> GetByPage(int pageCount=1, int pageSize=20)
+    {
+        var result = await _service.GetAsync(pageCount,pageSize);
+        if (result.Value == null)
+        {
+            return NotFound(result);
+        }
+        return Ok(result);
+    }
 
     [HttpPost]
     public async Task<IActionResult> Register([FromBody] PropertyOwnerDto dto)

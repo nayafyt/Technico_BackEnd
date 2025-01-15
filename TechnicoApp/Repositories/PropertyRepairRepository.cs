@@ -102,4 +102,14 @@ public class PropertyRepairRepository : IRepository<PropertyRepair, long>, IProp
                     .AsNoTracking()
                     .FirstOrDefaultAsync(p => p.DateTime == date && p.PropertyItem.PropertyOwnerVatNumber == vatNumber);
     }
+
+    public async Task<List<PropertyRepair>> GetAsync(int pageCount, int pageSize)
+    {
+        return await _context.PropertyRepairs
+                   .AsNoTracking()
+                   .Skip((pageCount - 1) * pageSize)
+                   .Take(pageSize)
+                   .Where(p => p.IsActive)
+                   .ToListAsync();
+    }
 }

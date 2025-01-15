@@ -41,6 +41,16 @@ namespace Technico.WebAPI.Controllers
             return CreatedAtAction(nameof(SearchByUserVatNumber), new { id = result_model.Id }, result);
         }
 
+        [HttpGet("ByPage")]
+        public async Task<IActionResult> GetByPage(int pageCount = 1, int pageSize = 20)
+        {
+            var result = await _service.GetAsync(pageCount, pageSize);
+            if (result.Value == null)
+            {
+                return NotFound(result);
+            }
+            return Ok(result);
+        }
         // DELETE: api/PropertyRepairs/5
 
         [HttpDelete("Permanent/{id}")]

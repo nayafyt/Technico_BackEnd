@@ -172,4 +172,35 @@ public class PropertyItemService: IPropertyItemService
         };
     }
 
+    public async Task<ResponseApi<List<PropertyItemDto>>> GetAsync(int pageCount, int pageSize)
+    {
+        // return await _repository.GetAsync(id);
+        var propertyItem = await _repository.GetAsync(pageCount,pageSize);
+
+        if (propertyItem == null)
+        {
+            return new ResponseApi<List<PropertyItemDto>>()
+            {
+                StatusCode = 404,
+                Description = "Property not found."
+            };
+        }
+        // Map results to DTOs
+        var propertyItemDtos = propertyItem
+            .Select(r => _mapper.GetDto(r))
+            .Where(dto => dto != null) // Filter out nulls
+            .Cast<PropertyItemDto>() // Cast to non-nullable type
+            .ToList();
+
+        return new ResponseApi<List<PropertyItemDto>>()
+        {
+            Value = propertyItemDtos,
+            StatusCode = 200,
+            Description = "The property details are shown."
+        };
+    }
+
+
+
+
 }

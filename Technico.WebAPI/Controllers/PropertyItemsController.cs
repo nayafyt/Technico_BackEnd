@@ -25,7 +25,16 @@ public class PropertyItemsController : ControllerBase
         }
         return Ok(result);
     }
-
+    [HttpGet("ByPage")]
+    public async Task<IActionResult> GetByPage(int pageCount = 1, int pageSize = 20)
+    {
+        var result = await _service.GetAsync(pageCount, pageSize);
+        if (result.Value == null)
+        {
+            return NotFound(result);
+        }
+        return Ok(result);
+    }
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
     {

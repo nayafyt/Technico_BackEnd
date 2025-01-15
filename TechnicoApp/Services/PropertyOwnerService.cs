@@ -222,4 +222,39 @@ public class PropertyOwnerService : IPropertyOwnerService
             Description = "The property owners are shown."
         };
     }
+
+    public async Task<ResponseApi<List<PropertyOwnerDto>>> GetAsync(int pageCount, int pageSize)
+    {
+
+        var propertyOwner = await _repository.GetAsync(pageCount, pageSize);
+
+        if (propertyOwner == null)
+        {
+            return new ResponseApi<List<PropertyOwnerDto>>()
+            {
+                StatusCode = 404,
+                Description = "Not found property owners."
+            };
+        }
+        // Map results to DTOs
+        var propertyOwnerDtos = propertyOwner
+            .Select(r => _mapper.GetDto(r))
+            .Where(dto => dto != null) // Filter out nulls
+            .Cast<PropertyOwnerDto>() // Cast to non-nullable type
+            .ToList();
+
+        var propertyOwner_Items = propertyOwner
+            .Select(po => _propertyItemRepository.GetByOwnerVatNumberAsync(po.VatNumber))
+            .ToList();
+
+
+
+        return new ResponseApi<List<PropertyOwnerDto>>()
+        {
+            Value = propertyOwnerDtos,
+            StatusCode = 200,
+            Description = "The property owners are shown."
+        };
+    }
+
 }

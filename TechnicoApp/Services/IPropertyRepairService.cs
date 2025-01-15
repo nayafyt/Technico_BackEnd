@@ -16,6 +16,8 @@ public interface IPropertyRepairService
     Task<ResponseApi<bool>> DeletePermanentlyAsync(long id);
     Task<ResponseApi<PropertyRepairDto>> DeactivateAsync(long id);
     Task<ResponseApi<List<PropertyRepairDto>>> GetAllAsync();
+    Task<ResponseApi<List<PropertyRepairDto>>> GetAsync(int pageCount, int pageSize);
 
-   
+
+
 }
